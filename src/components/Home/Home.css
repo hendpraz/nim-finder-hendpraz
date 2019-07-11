@@ -92,4 +92,22 @@ th, td {
 
 .pagination{
   float: left;
+  width: 65px;
+  background: #2196F3;
+  font-size: 12px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+
+  color: white;
+  padding: 8px 8px;
+  text-decoration: none;
+  margin: 4px 2px;
+  border-radius: 4px;
+  display: none;
+}
+
+#nextButton{
+  background: mediumseagreen;
+  
 }
