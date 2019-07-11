@@ -19,6 +19,7 @@ class Home extends Component {
         this.nextPage = this.nextPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
         this.searchQuery = this.searchQuery.bind(this);
+        this.toggleHide = this.toggleHide.bind(this);
     }
 
     // Lifecycle
@@ -29,8 +30,7 @@ class Home extends Component {
     }
 
     componentDidMount(){
-        this.toggleHide("nextButton");
-        this.toggleHide("prevButton");
+        document.title = "ITB Nim Finder - Hendpraz"
     }
 
     toggleHide(docId){
@@ -190,41 +190,40 @@ class Home extends Component {
     }
 
     render(){
-        if (sessionStorage.getItem('authToken')) {
-            return (
-                <div className="Home" background-color="#282c34">
-                    <header className="Home-header">
-                        <h2 align="center">ITB NIM Finder</h2>
-                    </header>
-                    <div className="Home-body">
-                        <form className="Search" onSubmit = {this.onSearch}>
-                            <input 
-                                name="query"
-                                placeholder="Masukkan Nama/NIM"
-                                type="text"
-                                onChange={this.onChange}
-                            />
-                            <button type="submit">Search</button>
-                        </form>
-                        <p id="notfound">
-        
-                        </p>
-                        <button id="prevButton" className="pagination" onClick={this.prevPage}>PREV</button>
-                        <button id="nextButton" className="pagination" onClick={this.nextPage}>NEXT</button>
-                        <table id="tableID">
-                            
-                        </table>
-                        <br />
-                    </div>
-                    <footer className="Home-footer">
-                            Masukkan Nama atau NIM. Salah satu saja<br />
-                            Contoh "Hendry", "13517105"<br />
-                    </footer>
+        return (
+            <div className="Home" background-color="#282c34">
+                <title>ITB NIM Finder</title>
+                <header className="Home-header">
+                    
+                    <h2 align="center">ITB NIM Finder - Hendpraz</h2>
+                </header>
+                <div className="Home-body">
+                    <form className="Search" onSubmit = {this.onSearch}>
+                        <input 
+                            name="query"
+                            placeholder="Masukkan Nama/NIM"
+                            type="text"
+                            onChange={this.onChange}
+                        />
+                        <button type="submit">Search</button>
+                    </form>
+                    <p id="notfound">
+    
+                    </p>
+                    
+                    <table id="tableID">
+                        
+                    </table>
+                    <button id="prevButton" className="pagination" onClick={this.prevPage}>PREV</button>
+                    <button id="nextButton" className="pagination" onClick={this.nextPage}>NEXT</button>
+                    <br />
                 </div>
-            );    
-        }else{
-            return (<Redirect to={'/'}/>);
-        }
+                <footer className="Home-footer">
+                        Masukkan Nama atau NIM. Salah satu saja<br />
+                        Contoh "Hendry", "13517105"<br />
+                </footer>
+            </div>
+        );    
     }
 }
 
