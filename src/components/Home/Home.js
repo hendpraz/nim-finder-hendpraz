@@ -2,24 +2,45 @@ import React, { Component } from 'react';
 import './Home.css';
 import { GetData } from '../../services/GetData';
 import { PostData } from '../../services/PostData';
+import { CreateTable } from '../../services/GenerateTable';
+import { Redirect } from 'react-router-dom'
 
 class Home extends Component {
     constructor(props){
         super(props)
         this.state = {
             query: '',
+            currQuery: '',
+            pageNum: 0
         }
         this.onChange = this.onChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
-        this.generateTableHead = this.generateTableHead.bind(this);
-        this.generateTable = this.generateTable.bind(this);
-        this.tableCreate = this.tableCreate.bind(this);
         this.login = this.login.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.prevPage = this.prevPage.bind(this);
+        this.searchQuery = this.searchQuery.bind(this);
     }
 
     // Lifecycle
     componentWillMount(){
-        this.login();
+        if (!(sessionStorage.getItem('authToken'))) {
+            this.login();
+        }
+    }
+
+    componentDidMount(){
+        this.toggleHide("nextButton");
+        this.toggleHide("prevButton");
+    }
+
+    toggleHide(docId){
+        var x = document.getElementById(docId);
+        x.style.display = "none";
+    }
+
+    toggleShow(docId){
+        var x = document.getElementById(docId);
+        x.style.display = "block";
     }
 
     //Login with my account
@@ -35,6 +56,9 @@ class Home extends Component {
                 alert("Something wrong!");
                 let myString = JSON.stringify(result);
                 alert(myString);
+
+                sessionStorage.setItem("authToken",'');
+                sessionStorage.clear();
             }
         });
     }
@@ -47,34 +71,11 @@ class Home extends Component {
         })
     }
 
-    //Generate Table
-    generateTableHead(table) {
-        let thead = table.createTHead();
-        let row = thead.insertRow();
-        let key = ["Nama","NIM TPB","NIM Jurusan","Program Studi"]
-        for (let i = 0;i<4;i++) {
-            let th = document.createElement("th");
-            let text = document.createTextNode(key[i]);
-            th.appendChild(text);
-            row.appendChild(th);
+    clearTable(){
+        var parent = document.getElementById("tableID");
+        while(parent.hasChildNodes()){
+            parent.removeChild(parent.firstChild);
         }
-    }
-
-    generateTable(table, cols) {
-        for (let element of cols) {
-            let row = table.insertRow();
-            for (let key in element) {
-                let cell = row.insertCell();
-                let text = document.createTextNode(element[key]);
-                cell.appendChild(text);
-            }
-        }
-    }
-
-    tableCreate(data){
-        let table = document.querySelector("table");
-        this.generateTable(table, data); // generate the table first
-        this.generateTableHead(table); // then the head
     }
 
     //Actions taken if user clicked Search button
@@ -83,6 +84,10 @@ class Home extends Component {
     
         const query = this.state.query;
         var queryURL = 'https://api.stya.net/nim/';
+        let temp2 = 0;
+        
+        this.toggleHide("nextButton");
+        this.toggleHide("prevButton");
 
         //Clear search results (table or "not found")
         var parent = document.getElementById("tableID");
@@ -105,7 +110,56 @@ class Home extends Component {
         }
 
         //Create URL for query
-        queryURL = queryURL + query + '&count=10'; 
+        queryURL = queryURL + query + '&count=10';
+        let temp = queryURL + '&page=' + temp2.toString()
+        this.setState({
+            currQuery : temp.slice(0,temp.length-1)
+        })
+        
+        this.setState({
+            pageNum: 0
+        })
+
+        this.searchQuery(queryURL)
+    };
+
+    nextPage = event =>{
+        event.preventDefault();
+
+        let temp = this.state.pageNum + 1;
+
+        let queryURL = this.state.currQuery + temp.toString();
+        this.searchQuery(queryURL);
+        this.toggleShow("prevButton");
+        this.setState({
+            pageNum: temp
+        });
+    }
+
+    prevPage = event =>{
+        event.preventDefault();
+
+        let temp = this.state.pageNum - 1;
+
+        var queryURL;
+        if(temp === 0){
+            let temp = this.state.currQuery
+            queryURL = temp.slice(0,temp.length-6);
+            this.toggleHide("prevButton");
+        } else{
+            queryURL = this.state.currQuery + temp.toString();
+        }
+        this.searchQuery(queryURL);
+        this.toggleShow("nextButton");
+        this.setState({
+            pageNum: temp
+        });
+    }
+
+    searchQuery(queryURL){
+        this.toggleHide("nextButton");
+        console.log(queryURL);
+        this.clearTable();
         const token = sessionStorage.getItem("authToken");
         GetData(queryURL, token).then((result) =>{
             var responseJson = result;
@@ -123,42 +177,54 @@ class Home extends Component {
                 if(data.length === 0){
                     document.getElementById("notfound").innerHTML = "Tidak ada hasil yang ditemukan!";
                 } else{
-                    this.tableCreate(data);
+                    CreateTable(data);
+                }
+
+                if(data.length === 10){
+                    this.toggleShow("nextButton");
+                } else{
+                    this.toggleHide("nextButton");
                 }
             }
         });
-    };
+    }
 
     render(){
-        return (
-        <div className="Home" background-color="#282c34">
-            <header className="Home-header">
-                <h2 align="center">ITB NIM Finder</h2>
-            </header>
-            <body className="Home-body">
-                <form className="Search" onSubmit = {this.onSearch}>
-                    <input 
-                        name="query"
-                        placeholder="Masukkan Nama/NIM"
-                        type="text"
-                        onChange={this.onChange}
-                    />
-                    <button type="submit">Search</button>
-                </form>
-                <p id="notfound">
-
-                </p>
-                <table id="tableID">
-                    
-                </table>
-                <br />
-            </body>
-            <footer className="Home-footer">
-                    Masukkan Nama atau NIM. Salah satu saja<br />
-                    Contoh "Hendry", "13517105"<br />
-            </footer>
-        </div>
-        );
+        if (sessionStorage.getItem('authToken')) {
+            return (
+                <div className="Home" background-color="#282c34">
+                    <header className="Home-header">
+                        <h2 align="center">ITB NIM Finder</h2>
+                    </header>
+                    <div className="Home-body">
+                        <form className="Search" onSubmit = {this.onSearch}>
+                            <input 
+                                name="query"
+                                placeholder="Masukkan Nama/NIM"
+                                type="text"
+                                onChange={this.onChange}
+                            />
+                            <button type="submit">Search</button>
+                        </form>
+                        <p id="notfound">
+        
+                        </p>
+                        <button id="prevButton" className="pagination" onClick={this.prevPage}>PREV</button>
+                        <button id="nextButton" className="pagination" onClick={this.nextPage}>NEXT</button>
+                        <table id="tableID">
+                            
+                        </table>
+                        <br />
+                    </div>
+                    <footer className="Home-footer">
+                            Masukkan Nama atau NIM. Salah satu saja<br />
+                            Contoh "Hendry", "13517105"<br />
+                    </footer>
+                </div>
+            );    
+        }else{
+            return (<Redirect to={'/'}/>);
+        }
     }
 }
 

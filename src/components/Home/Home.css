@@ -46,7 +46,7 @@ input[type=text] {
 }
 
 /* Style the submit button */
-button {
+button[type=submit] {
   float: left;
   width: 30%;
   background: #2196F3;
@@ -88,4 +88,8 @@ table, th, td {
 
 th, td {
     padding: 8px;
+}
+
+.pagination{
+  float: left;
 }
