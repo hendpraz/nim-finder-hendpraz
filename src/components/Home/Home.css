@@ -1,0 +1,89 @@
+.Home {
+  text-align: center;
+}
+
+.Home-header {
+  background-color: #282c34;
+  min-height: 9vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+}
+
+.Home-body {
+  background-color: #282c34;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+}
+
+.Home-footer {
+  background-color: #282c34;
+  min-height: 14vh;
+  display: block;
+  justify-content: center;
+  color: white;
+}
+
+.Home-link {
+  color: #46fff093;
+}
+
+form.Search input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 100%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.Search button {
+  float: left;
+  width: 30%;
+  background: #2196F3;
+  font-size: 13px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+
+  color: white;
+  padding: 16px 16px;
+  text-decoration: none;
+  margin: 8px 2px;
+  border-radius: 4px;
+}
+
+form.Search button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.Search::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+form.Search {
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid white;
+}
+
+th, td {
+    padding: 8px;
+}
