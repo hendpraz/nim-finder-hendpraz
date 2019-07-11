@@ -34,17 +34,19 @@
   color: #46fff093;
 }
 
-form.Search input[type=text] {
+input[type=text] {
   padding: 10px;
-  font-size: 17px;
+  font-size: 15px;
   border: 1px solid grey;
   float: left;
   width: 100%;
   background: #f1f1f1;
+  margin: 8px 2px;
+  border-radius: 4px;
 }
 
 /* Style the submit button */
-form.Search button {
+button {
   float: left;
   width: 30%;
   background: #2196F3;

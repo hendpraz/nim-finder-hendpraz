@@ -1,35 +1,42 @@
 import React, { Component } from 'react';
 import './Home.css';
-import {Redirect} from 'react-router-dom'
 import { GetData } from '../../services/GetData';
-import Table from './Table';
+import { PostData } from '../../services/PostData';
 
 class Home extends Component {
     constructor(props){
         super(props)
         this.state = {
             query: '',
-            JSONData: [],
-            currQuery: '',
-            pageNum: 0,
-            redirectToReferrer: false
         }
         this.onChange = this.onChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
-        this.logout = this.logout.bind(this);
-        this.clearTable = this.clearTable.bind(this);
-        this.nextPage = this.nextPage.bind(this);
+        this.generateTableHead = this.generateTableHead.bind(this);
+        this.generateTable = this.generateTable.bind(this);
+        this.tableCreate = this.tableCreate.bind(this);
+        this.login = this.login.bind(this);
     }
 
     // Lifecycle
     componentWillMount(){
-        if(!(sessionStorage.getItem("authToken"))){
-            this.setState({redirectToReferrer: true});
-        }
+        this.login();
     }
 
-    componentDidMount(){
-        this.toggleHide();
+    //Login with my account
+    login(){
+        var userData = {
+            username: 'mhendryp123',
+            password: 'hahaha123'
+        }
+        PostData('login', userData).then((result) =>{
+            if(result.code === 0){
+                sessionStorage.setItem('authToken',JSON.stringify(result.token));
+            } else{
+                alert("Something wrong!");
+                let myString = JSON.stringify(result);
+                alert(myString);
+            }
+        });
     }
 
     //Set value of query
@@ -38,29 +45,51 @@ class Home extends Component {
         this.setState({
             [event.target.name] : event.target.value
         })
-        this.clearTable();
-        console.log(this.state);
     }
 
-    clearTable(){
-        var parent = document.getElementById("tableID");
-        while(parent.hasChildNodes()){
-            parent.removeChild(parent.firstChild);
+    //Generate Table
+    generateTableHead(table) {
+        let thead = table.createTHead();
+        let row = thead.insertRow();
+        let key = ["Nama","NIM TPB","NIM Jurusan","Program Studi"]
+        for (let i = 0;i<4;i++) {
+            let th = document.createElement("th");
+            let text = document.createTextNode(key[i]);
+            th.appendChild(text);
+            row.appendChild(th);
         }
     }
 
+    generateTable(table, cols) {
+        for (let element of cols) {
+            let row = table.insertRow();
+            for (let key in element) {
+                let cell = row.insertCell();
+                let text = document.createTextNode(element[key]);
+                cell.appendChild(text);
+            }
+        }
+    }
+
+    tableCreate(data){
+        let table = document.querySelector("table");
+        this.generateTable(table, data); // generate the table first
+        this.generateTableHead(table); // then the head
+    }
+
+    //Actions taken if user clicked Search button
     onSearch = event => {
         event.preventDefault();
     
         const query = this.state.query;
         var queryURL = 'https://api.stya.net/nim/';
-        this.setState({
-            pageNum: 0
-        })
 
         //Clear search results (table or "not found")
-        this.toggleHide();
-        this.clearTable();
+        var parent = document.getElementById("tableID");
+        while(parent.hasChildNodes())
+        {
+            parent.removeChild(parent.firstChild);
+        }
         document.getElementById("notfound").innerHTML = "";
 
         if (query === '') {
@@ -84,9 +113,6 @@ class Home extends Component {
                 alert("Something wrong!");
                 let myString = JSON.stringify(result);
                 alert(myString);
-                this.setState({
-                    redirectToReferrer: true
-                });
             } else{
                 let payload = responseJson.payload;
                 var data = [];
@@ -95,103 +121,21 @@ class Home extends Component {
                 }
                 //Check the data of payload
                 if(data.length === 0){
-                    this.clearTable();
-                    console.log("HAHA");
                     document.getElementById("notfound").innerHTML = "Tidak ada hasil yang ditemukan!";
-                    this.setState({
-                        JSONData : []
-                    })
                 } else{
-                    this.clearTable();
-                    let temp = queryURL + '&page=' + this.state.pageNum.toString()
-                    this.setState({
-                        JSONData : data,
-                        currQuery : temp.slice(0,temp.length-1)
-                    })
-                    if(data.length === 10){
-                        this.toggleShow();
-                    } else{
-                        this.toggleHide();
-                    }
+                    this.tableCreate(data);
                 }
             }
         });
     };
 
-    toggleHide(){
-        var x = document.getElementById("nextButton");
-        x.style.display = "none";
-    }
-
-    toggleShow(){
-        var x = document.getElementById("nextButton");
-        x.style.display = "block";
-    }
-
-    nextPage = event =>{
-        event.preventDefault();
-
-        this.setState({
-            pageNum: this.state.pageNum + 1
-        })
-        this.clearTable();
-
-        var queryURL = this.state.currQuery + this.state.pageNum.toString();
-        const token = sessionStorage.getItem("authToken");
-        GetData(queryURL, token).then((result) =>{
-            var responseJson = result;
-            if(responseJson.status !== "OK"){
-                alert("Something wrong!");
-            } else{
-                let payload = responseJson.payload;
-                var data = [];
-                for (var i=0;i<payload.length;i++) {
-                    data.push(JSON.parse(JSON.stringify(payload[i])));
-                }
-                //Check the data of payload
-                if(data.length === 0){
-                    this.clearTable();
-                    document.getElementById("notfound").innerHTML = "Tidak ada hasil yang ditemukan!";
-                    this.setState({
-                        JSONData : []
-                    });
-                    this.toggleHide();
-                } else{
-                    this.clearTable();
-                    this.setState({
-                        JSONData : data
-                    })
-                    if(data.length === 10){
-                        this.toggleShow();
-                    } else{
-                        this.clearTable();
-                        this.setState({
-                            pageNum : 0
-                        })
-                        this.toggleHide();
-                    }
-                }
-            }
-        });
-    }
-
-    logout(){
-        sessionStorage.setItem("authToken",'');
-        sessionStorage.clear();
-        this.setState({redirectToReferrer: true});
-    }
-
     render(){
-        if (this.state.redirectToReferrer) {
-            return (<Redirect to={'/login'}/>);
-        }
-        
         return (
         <div className="Home" background-color="#282c34">
             <header className="Home-header">
                 <h2 align="center">ITB NIM Finder</h2>
             </header>
-            <body id="bodypart" className="Home-body">
+            <body className="Home-body">
                 <form className="Search" onSubmit = {this.onSearch}>
                     <input 
                         name="query"
@@ -204,16 +148,14 @@ class Home extends Component {
                 <p id="notfound">
 
                 </p>
-                
-                <button id="nextButton" onClick={this.nextPage}>NEXT</button>
-                <br />
-                <Table id="tableID" data={this.state.JSONData}/>
+                <table id="tableID">
+                    
+                </table>
                 <br />
             </body>
             <footer className="Home-footer">
                     Masukkan Nama atau NIM. Salah satu saja<br />
                     Contoh "Hendry", "13517105"<br />
-                    <button onClick = {this.logout}>Logout</button>
             </footer>
         </div>
         );
