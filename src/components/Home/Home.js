@@ -40,7 +40,7 @@ class Home extends Component {
 
     toggleShow(docId){
         var x = document.getElementById(docId);
-        x.style.display = "block";
+        x.style.display = "inline-block";
     }
 
     //Login with my account
@@ -158,7 +158,6 @@ class Home extends Component {
 
     searchQuery(queryURL){
         this.toggleHide("nextButton");
-        console.log(queryURL);
         this.clearTable();
         const token = sessionStorage.getItem("authToken");
         GetData(queryURL, token).then((result) =>{
@@ -191,6 +190,7 @@ class Home extends Component {
 
     render(){
         return (
+			<div>
             <div className="Home" background-color="#282c34">
                 <title>ITB NIM Finder</title>
                 <header className="Home-header">
@@ -214,14 +214,18 @@ class Home extends Component {
                     <table id="tableID">
                         
                     </table>
-                    <button id="prevButton" className="pagination" onClick={this.prevPage}>PREV</button>
-                    <button id="nextButton" className="pagination" onClick={this.nextPage}>NEXT</button>
-                    <br />
                 </div>
-                <footer className="Home-footer">
+                
+            </div>
+            <div className="Bottom">
+				<button id="prevButton" className="pagination" onClick={this.prevPage}>PREV</button><button id="nextButton" className="pagination" onClick={this.nextPage}>NEXT</button>
+				<br />
+				<br />
+				<footer className="Home-footer">
                         Masukkan Nama atau NIM. Salah satu saja<br />
                         Contoh "Hendry", "13517105"<br />
                 </footer>
+            </div>
             </div>
         );    
     }
