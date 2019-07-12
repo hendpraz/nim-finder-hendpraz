@@ -30,6 +30,11 @@
   color: white;
 }
 
+.Bottom{
+	justify-content: center;
+	background-color: #282c34;
+}
+
 .Home-link {
   color: #46fff093;
 }
@@ -91,7 +96,6 @@ th, td {
 }
 
 .pagination{
-  float: left;
   width: 65px;
   background: #2196F3;
   font-size: 12px;
