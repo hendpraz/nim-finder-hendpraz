@@ -1,13 +1,11 @@
-export function GetData(queryURL, authToken){
-    //Remove quotes from "'aaa'" to "aaa"
-    var newToken = authToken.slice(1, authToken.length-1);
-
+export function GetData(queryURL){
     //Fetch API
     return new Promise((resolve, reject) =>{
         fetch(queryURL, {
+            mode: 'cors',
             method: 'GET',
             headers: new Headers({
-                'Auth-Token' : newToken
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             })
         })
         .then((response) => response.json())
