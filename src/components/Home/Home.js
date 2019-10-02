@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Home.css';
 import { GetData } from '../../services/GetData';
-import { PostData } from '../../services/PostData';
 import { CreateTable } from '../../services/GenerateTable';
 import { Redirect } from 'react-router-dom'
 
@@ -15,7 +14,6 @@ class Home extends Component {
         }
         this.onChange = this.onChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
-        this.login = this.login.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
         this.searchQuery = this.searchQuery.bind(this);
@@ -23,12 +21,6 @@ class Home extends Component {
     }
 
     // Lifecycle
-    componentWillMount(){
-        if (!(sessionStorage.getItem('authToken'))) {
-            this.login();
-        }
-    }
-
     componentDidMount(){
         document.title = "ITB Nim Finder - Hendpraz"
     }
@@ -41,26 +33,6 @@ class Home extends Component {
     toggleShow(docId){
         var x = document.getElementById(docId);
         x.style.display = "inline-block";
-    }
-
-    //Login with my account
-    login(){
-        var userData = {
-            username: 'mhendryp123',
-            password: 'hahaha123'
-        }
-        PostData('login', userData).then((result) =>{
-            if(result.code === 0){
-                sessionStorage.setItem('authToken',JSON.stringify(result.token));
-            } else{
-                alert("Something wrong!");
-                let myString = JSON.stringify(result);
-                alert(myString);
-
-                sessionStorage.setItem("authToken",'');
-                sessionStorage.clear();
-            }
-        });
     }
 
     //Set value of query
@@ -83,7 +55,7 @@ class Home extends Component {
         event.preventDefault();
     
         const query = this.state.query;
-        var queryURL = 'https://api.stya.net/nim/';
+        var queryURL = 'https://cors-anywhere.herokuapp.com/https://nim-finder-api.herokuapp.com/';
         let temp2 = 0;
         
         this.toggleHide("nextButton");
@@ -159,8 +131,7 @@ class Home extends Component {
     searchQuery(queryURL){
         this.toggleHide("nextButton");
         this.clearTable();
-        const token = sessionStorage.getItem("authToken");
-        GetData(queryURL, token).then((result) =>{
+        GetData(queryURL).then((result) =>{
             var responseJson = result;
             if(responseJson.status !== "OK"){
                 alert("Something wrong!");
