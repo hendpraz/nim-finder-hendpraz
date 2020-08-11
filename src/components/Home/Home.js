@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Home.css';
 import { GetData } from '../../services/GetData';
 import { CreateTable } from '../../services/GenerateTable';
-import { Redirect } from 'react-router-dom'
 
 class Home extends Component {
     constructor(props){
@@ -193,8 +192,13 @@ class Home extends Component {
 				<br />
 				<br />
 				<footer className="Home-footer">
-                        Masukkan Nama atau NIM. Salah satu saja<br />
-                        Contoh "Hendry", "13517105"<br />
+                    Masukkan Nama atau NIM. Salah satu saja<br />
+                    Contoh "Hendry", "13515001"<br />
+                    <small>
+                        <br/>
+                        NIM Finder outdated, hanya bisa mencari mahasiswa angkatan 2015 ke atas. <br />
+                        Pencarian pertama kali dapat memakan waktu.
+                    </small>
                 </footer>
             </div>
             </div>
