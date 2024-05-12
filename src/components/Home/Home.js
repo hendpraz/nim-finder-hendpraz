@@ -244,7 +244,11 @@ class Home extends Component {
           <br />
           <footer className="Home-footer">
             {!this.state.currQuery && (
-              <span>Hasil pencarian akan muncul di sini.</span>
+              <span>
+                Hasil pencarian akan muncul di sini.
+                <br />
+                <br />
+              </span>
             )}
 
             <small>
