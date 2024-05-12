@@ -106,7 +106,7 @@ class Home extends Component {
     var queryURL;
     if (temp === 0) {
       let temp = this.state.currQuery;
-      queryURL = temp.slice(0, temp.length - 6);
+      queryURL = this.state.currQuery + "0";
       this.toggleHide("prevButton");
     } else {
       queryURL = this.state.currQuery + temp.toString();
