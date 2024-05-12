@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Home.css";
 import { GetData } from "../../services/GetData";
-import { CreateTable } from "../../services/GenerateTable";
 
 class Home extends Component {
   constructor(props) {
@@ -10,6 +9,8 @@ class Home extends Component {
       query: "",
       currQuery: "",
       pageNum: 0,
+      currentData: [],
+      matches: window.matchMedia("(min-width: 768px)").matches,
     };
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -17,11 +18,13 @@ class Home extends Component {
     this.prevPage = this.prevPage.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
     this.toggleHide = this.toggleHide.bind(this);
+    this.renderData = this.renderData.bind(this);
   }
 
   // Lifecycle
   componentDidMount() {
-    document.title = "ITB Nim Finder - Hendpraz";
+    const handler = (e) => this.setState({ matches: e.matches });
+    window.matchMedia("(min-width: 768px)").addEventListener("change", handler);
   }
 
   toggleHide(docId) {
@@ -136,7 +139,10 @@ class Home extends Component {
           document.getElementById("notfound").innerHTML =
             "Tidak ada hasil yang ditemukan!";
         } else {
-          CreateTable(data);
+          // CreateTable(data);
+          this.setState({
+            currentData: data,
+          });
         }
 
         if (data.length === 10) {
@@ -146,6 +152,41 @@ class Home extends Component {
         }
       }
     });
+  }
+
+  renderData(data) {
+    let widgets = [];
+
+    for (let element of data) {
+      const name = element["name"];
+      const nim_tpb = element["nim_tpb"];
+      const nim_jur = element["nim_jur"];
+      const prodi = element["prodi"];
+
+      widgets.push(
+        <div key={element["nim_jur"]} className="mahasiswa-item">
+          <div
+            style={{
+              textAlign: "left",
+              paddingTop: "0.5em",
+              paddingBottom: "0.5em",
+              paddingLeft: "0.5em",
+            }}
+          >
+            <div>
+              <span style={{ fontWeight: "bold", fontSize: 16 }}>{name}</span>
+              <div style={{ fontWeight: "normal", marginTop: 4 }}>
+                {nim_jur}
+                {nim_jur !== nim_tpb ? " - " + nim_tpb : ""} - {prodi}
+              </div>
+            </div>
+          </div>
+          <hr style={{ margin: 0 }} />
+        </div>
+      );
+    }
+
+    return widgets;
   }
 
   render() {
@@ -161,15 +202,21 @@ class Home extends Component {
           >
             ITB NIM Finder
           </div>
-          <div
-            style={{
-              fontSize: "24px",
-              fontWeight: "normal",
-              marginBottom: "20px",
-            }}
-          >
-            Cari mahasiswa berdasarkan NIM atau Nama.
-          </div>
+
+          {this.state.matches ? (
+            <div
+              style={{
+                fontSize: "24px",
+                fontWeight: "normal",
+                marginBottom: "20px",
+              }}
+              className="Home-intro"
+            >
+              Cari mahasiswa berdasarkan NIM atau Nama.
+            </div>
+          ) : (
+            <div style={{ height: 20 }}></div>
+          )}
           <div
             style={{
               display: "flex",
@@ -180,7 +227,7 @@ class Home extends Component {
           >
             <div
               style={{
-                width: "80%",
+                width: "90%",
                 maxWidth: "800px",
               }}
             >
@@ -222,6 +269,9 @@ class Home extends Component {
               <p id="notfound"></p>
 
               <table id="tableID"></table>
+
+              {this.state.currentData.length > 0 &&
+                this.renderData(this.state.currentData)}
             </div>
           </div>
         </div>
