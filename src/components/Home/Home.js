@@ -304,13 +304,6 @@ class Home extends Component {
                 <br />
               </span>
             )}
-
-            <small>
-              Note: NIM Finder ini hanya bisa mencari mahasiswa angkatan 2016 ke
-              atas.
-            </small>
-            <br />
-            <br />
             <br />
           </footer>
         </div>
