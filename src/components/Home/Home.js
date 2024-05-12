@@ -56,7 +56,6 @@ class Home extends Component {
     const query = this.state.query;
     var queryURL =
       "https://07qw5uk5i4.execute-api.ap-southeast-1.amazonaws.com/mahasiswa?query=";
-    let temp2 = 0;
 
     this.toggleHide("nextButton");
     this.toggleHide("prevButton");
@@ -105,7 +104,6 @@ class Home extends Component {
 
     var queryURL;
     if (temp === 0) {
-      let temp = this.state.currQuery;
       queryURL = this.state.currQuery + "0";
       this.toggleHide("prevButton");
     } else {
