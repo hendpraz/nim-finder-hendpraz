@@ -138,6 +138,10 @@ class Home extends Component {
         if (data.length === 0) {
           document.getElementById("notfound").innerHTML =
             "Tidak ada hasil yang ditemukan!";
+
+          this.setState({
+            currentData: data,
+          });
         } else {
           // CreateTable(data);
           this.setState({
@@ -302,7 +306,6 @@ class Home extends Component {
             )}
 
             <small>
-              <br />
               Note: NIM Finder ini hanya bisa mencari mahasiswa angkatan 2016 ke
               atas.
             </small>
