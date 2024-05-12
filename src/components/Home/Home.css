@@ -1,10 +1,11 @@
 .Home {
   text-align: center;
+  min-height: 100vh;
+  background-color: #282c34;
 }
 
 .Home-header {
   background-color: #282c34;
-  min-height: 9vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +15,6 @@
 
 .Home-body {
   background-color: #282c34;
-  min-height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,6 +33,7 @@
 .Bottom{
 	justify-content: center;
 	background-color: #282c34;
+  margin-top: 12px;
 }
 
 .Home-link {
