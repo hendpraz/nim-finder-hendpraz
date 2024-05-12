@@ -43,6 +43,11 @@ input[type=text] {
   font-style: normal;
 }
 
+input[type=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
 /* Style the submit button */
 button[type=submit] {
   float: left;
@@ -64,7 +69,7 @@ button[type=submit] {
 }
 
 form.Search button:hover {
-  background: #0b7dda;
+  background: rgb(33, 33, 33);
 }
 
 /* Clear floats */
@@ -93,10 +98,10 @@ th, td {
 
 .pagination{
   width: 65px;
-  background: #2196F3;
+  background: white;
+  color: black;
   font-size: 12px;
-  border: 1px solid grey;
-  border-left: none;
+  border: 1px solid black;
   cursor: pointer;
 
   padding: 8px 8px;
@@ -107,5 +112,11 @@ th, td {
 }
 
 #nextButton{
-  background: mediumseagreen;
+  background: black;
+  color: white;
+  border: 1px solid black;
+}
+
+.mahasiswa-item:hover {
+  background-color: #f1f1f1;
 }
