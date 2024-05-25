@@ -298,8 +298,7 @@ class Home extends Component {
               {this.state.currentData.length % 10 === 0
                 ? this.state.numOfTotalData / 10
                 : this.state.numOfTotalData / 10 + 1}
-              <br />
-              <br />
+              <div style={{ height: 6 }}></div>
             </div>
           )}
           <button
