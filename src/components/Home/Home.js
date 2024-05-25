@@ -295,9 +295,9 @@ class Home extends Component {
           {this.state.currQuery && this.state.currentData.length > 0 && (
             <div>
               Halaman {this.state.pageNum + 1} dari{" "}
-              {this.state.currentData.length % 10 === 0
+              {this.state.numOfTotalData % 10 === 0
                 ? Math.floor(this.state.numOfTotalData / 10)
-                : Math.floor(this.state.numOfTotalData / 10 + 1)}
+                : Math.floor(this.state.numOfTotalData / 10) + 1}
               <div style={{ height: 6 }}></div>
             </div>
           )}
