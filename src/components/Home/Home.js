@@ -10,6 +10,7 @@ class Home extends Component {
       currQuery: "",
       pageNum: 0,
       currentData: [],
+      numOfTotalData: 0,
       matches: window.matchMedia("(min-width: 768px)").matches,
     };
     this.onChange = this.onChange.bind(this);
@@ -141,15 +142,21 @@ class Home extends Component {
 
           this.setState({
             currentData: data,
+            numOfTotalData: responseJson.total,
           });
         } else {
+          document.getElementById("notfound").innerHTML = "";
           // CreateTable(data);
           this.setState({
             currentData: data,
+            numOfTotalData: responseJson.total,
           });
         }
 
-        if (data.length === 10) {
+        const isLastPage =
+          this.state.numOfTotalData / 10 - 1 === this.state.pageNum;
+
+        if (data.length === 10 && !isLastPage) {
           this.toggleShow("nextButton");
         } else {
           this.toggleHide("nextButton");
@@ -217,6 +224,11 @@ class Home extends Component {
               className="Home-intro"
             >
               Cari mahasiswa berdasarkan NIM atau Nama.
+              <br />
+              <span style={{ fontSize: "18px" }}>
+                Lengkap dari angkatan 2011 hingga 2023, termasuk mahasiswa S2
+                dan S3.
+              </span>
             </div>
           ) : (
             <div style={{ height: 20 }}></div>
@@ -280,6 +292,16 @@ class Home extends Component {
           </div>
         </div>
         <div className="Bottom">
+          {this.state.currQuery && this.state.currentData.length > 0 && (
+            <div>
+              Halaman {this.state.pageNum + 1} dari{" "}
+              {this.state.currentData.length % 10 === 0
+                ? this.state.numOfTotalData / 10
+                : this.state.numOfTotalData / 10 + 1}
+              <br />
+              <br />
+            </div>
+          )}
           <button
             id="prevButton"
             className="pagination"
