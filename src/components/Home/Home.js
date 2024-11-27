@@ -15,9 +15,10 @@ class Home extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
+
+    this.loadMore = this.loadMore.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
+
     this.toggleHide = this.toggleHide.bind(this);
     this.renderData = this.renderData.bind(this);
   }
@@ -51,6 +52,10 @@ class Home extends Component {
     while (parent.hasChildNodes()) {
       parent.removeChild(parent.firstChild);
     }
+
+    this.setState({
+      currentData: [],
+    });
   }
 
   //Actions taken if user clicked Search button
@@ -60,9 +65,6 @@ class Home extends Component {
     const query = this.state.query;
     var queryURL =
       "https://07qw5uk5i4.execute-api.ap-southeast-1.amazonaws.com/mahasiswa?query=";
-
-    this.toggleHide("nextButton");
-    this.toggleHide("prevButton");
 
     //Clear search results (table or "not found")
     var parent = document.getElementById("tableID");
@@ -85,44 +87,26 @@ class Home extends Component {
       pageNum: 0,
     });
 
+    this.clearTable();
+
     this.searchQuery(queryURL);
   };
 
-  nextPage = (event) => {
+  loadMore = (event) => {
     event.preventDefault();
 
     let temp = this.state.pageNum + 1;
 
     let queryURL = this.state.currQuery + temp.toString();
     this.searchQuery(queryURL);
-    this.toggleShow("prevButton");
-    this.setState({
-      pageNum: temp,
-    });
-  };
 
-  prevPage = (event) => {
-    event.preventDefault();
-
-    let temp = this.state.pageNum - 1;
-
-    var queryURL;
-    if (temp === 0) {
-      queryURL = this.state.currQuery + "0";
-      this.toggleHide("prevButton");
-    } else {
-      queryURL = this.state.currQuery + temp.toString();
-    }
-    this.searchQuery(queryURL);
-    this.toggleShow("nextButton");
     this.setState({
       pageNum: temp,
     });
   };
 
   searchQuery(queryURL) {
-    this.toggleHide("nextButton");
-    this.clearTable();
+    // this.toggleHide("loadMoreButton");
     GetData(queryURL).then((result) => {
       var responseJson = result;
       if (responseJson.status !== "OK") {
@@ -131,9 +115,11 @@ class Home extends Component {
         alert(myString);
       } else {
         let payload = responseJson.payload;
-        var data = [];
+        var data = this.state.currentData;
+        var newDataLength = 0;
         for (var i = 0; i < payload.length; i++) {
           data.push(JSON.parse(JSON.stringify(payload[i])));
+          newDataLength++;
         }
         //Check the data of payload
         if (data.length === 0) {
@@ -156,10 +142,13 @@ class Home extends Component {
         const isLastPage =
           this.state.numOfTotalData / 10 - 1 === this.state.pageNum;
 
-        if (data.length === 10 && !isLastPage) {
-          this.toggleShow("nextButton");
+        console.log(newDataLength.length);
+        console.log(isLastPage);
+
+        if (newDataLength === 10 && !isLastPage) {
+          this.toggleShow("loadMoreButton");
         } else {
-          this.toggleHide("nextButton");
+          this.toggleHide("loadMoreButton");
         }
       }
     });
@@ -208,7 +197,7 @@ class Home extends Component {
             style={{
               fontSize: "48px",
               fontWeight: "bold",
-              marginTop: "40px",
+              marginTop: "20px",
             }}
           >
             ITB NIM Finder
@@ -223,11 +212,9 @@ class Home extends Component {
               }}
               className="Home-intro"
             >
-              Cari mahasiswa berdasarkan NIM atau Nama.
-              <br />
               <span style={{ fontSize: "18px" }}>
-                Lengkap dari angkatan 2011 hingga 2023, termasuk mahasiswa S2
-                dan S3.
+                Lengkap dari angkatan 2011 hingga 2024, termasuk mahasiswa S1,
+                S2 dan S3.
               </span>
             </div>
           ) : (
@@ -282,9 +269,20 @@ class Home extends Component {
                 />
                 <button type="submit">↵</button>
               </form>
-              <p id="notfound"></p>
+              <div id="notfound"></div>
 
               <table id="tableID"></table>
+
+              {this.state.currQuery && this.state.currentData.length > 0 && (
+                <div style={{ marginTop: "4px" }}>
+                  Menampilkan{" "}
+                  {10 * (this.state.pageNum + 1) <= this.state.numOfTotalData
+                    ? 10 * (this.state.pageNum + 1)
+                    : this.state.numOfTotalData}{" "}
+                  dari {this.state.numOfTotalData} hasil.
+                  <div style={{ height: 6 }}></div>
+                </div>
+              )}
 
               {this.state.currentData.length > 0 &&
                 this.renderData(this.state.currentData)}
@@ -292,41 +290,26 @@ class Home extends Component {
           </div>
         </div>
         <div className="Bottom">
-          {this.state.currQuery && this.state.currentData.length > 0 && (
-            <div>
-              Halaman {this.state.pageNum + 1} dari{" "}
-              {this.state.numOfTotalData % 10 === 0
-                ? Math.floor(this.state.numOfTotalData / 10)
-                : Math.floor(this.state.numOfTotalData / 10) + 1}
-              <div style={{ height: 6 }}></div>
-            </div>
-          )}
           <button
-            id="prevButton"
+            id="loadMoreButton"
             className="pagination"
-            onClick={this.prevPage}
+            onClick={this.loadMore}
           >
-            PREV
+            Load More...
           </button>
-          <button
-            id="nextButton"
-            className="pagination"
-            onClick={this.nextPage}
-          >
-            NEXT
-          </button>
-          <br />
-          <br />
-          <footer className="Home-footer">
-            {!this.state.currQuery && (
+
+          {!this.state.currQuery && (
+            <footer className="Home-footer">
               <span>
+                <br />
+                <br />
                 Hasil pencarian akan muncul di sini.
                 <br />
                 <br />
               </span>
-            )}
-            <br />
-          </footer>
+              <br />
+            </footer>
+          )}
         </div>
       </div>
     );
