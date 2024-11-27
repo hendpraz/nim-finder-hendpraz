@@ -97,21 +97,22 @@ th, td {
 }
 
 .pagination{
-  width: 65px;
+  width: 200px;
+  height: 50px;
   background: white;
   color: black;
-  font-size: 12px;
+  font-size: 16px;
   border: 1px solid black;
   cursor: pointer;
 
   padding: 8px 8px;
   text-decoration: none;
-  margin: 4px 2px;
+  margin-top: 24px;
   border-radius: 4px;
   display: none;
 }
 
-#nextButton{
+#loadMoreButton{
   background: black;
   color: white;
   border: 1px solid black;
@@ -119,4 +120,8 @@ th, td {
 
 .mahasiswa-item:hover {
   background-color: #f1f1f1;
+}
+
+.Bottom {
+  margin-bottom: 50px;
 }
