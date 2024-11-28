@@ -80,13 +80,10 @@ class Home extends Component {
     queryURL = queryURL + query + "&page=0";
     this.setState({
       currQuery: queryURL.slice(0, queryURL.length - 1),
+      pageNum: 0,
     });
 
     this.toggleHide("loadMoreButton");
-
-    this.setState({
-      pageNum: 0,
-    });
 
     this.clearTable();
 
@@ -254,9 +251,15 @@ class Home extends Component {
                 />
                 <button type="submit">↵</button>
               </form>
-              {this.state.currQuery && this.state.currentData.length === 0 && (
-                <div id="notfound">Tidak ada hasil yang ditemukan!</div>
-              )}
+              {this.state.currQuery &&
+                this.state.currentData.length === 0 &&
+                this.state.pageNum !== 0 && (
+                  <div id="notfound">Tidak ada hasil yang ditemukan!</div>
+                )}
+
+              {this.state.currQuery &&
+                this.state.currentData.length === 0 &&
+                this.state.pageNum === 0 && <div id="loading">Loading...</div>}
 
               <table id="tableID"></table>
 
