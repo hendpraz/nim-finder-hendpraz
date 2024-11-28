@@ -101,6 +101,7 @@ class Home extends Component {
 
     this.setState({
       pageNum: temp,
+      isLoading: true,
     });
   };
 
@@ -283,7 +284,20 @@ class Home extends Component {
           <button
             id="loadMoreButton"
             className="pagination"
-            onClick={this.loadMore}
+            onClick={(event) => {
+              if (this.state.isLoading) return;
+
+              this.loadMore(event);
+            }}
+            style={
+              this.state.isLoading
+                ? {
+                    backgroundColor: "#f1f1f1",
+                    color: "grey",
+                    border: "1px solid darkgrey",
+                  }
+                : {}
+            }
           >
             Load More...
           </button>
