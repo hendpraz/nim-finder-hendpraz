@@ -83,6 +83,8 @@ class Home extends Component {
       currQuery: queryURL.slice(0, queryURL.length - 1),
     });
 
+    this.toggleHide("loadMoreButton");
+
     this.setState({
       pageNum: 0,
     });
@@ -106,7 +108,6 @@ class Home extends Component {
   };
 
   searchQuery(queryURL) {
-    // this.toggleHide("loadMoreButton");
     GetData(queryURL).then((result) => {
       var responseJson = result;
       if (responseJson.status !== "OK") {
