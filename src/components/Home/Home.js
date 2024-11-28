@@ -81,6 +81,7 @@ class Home extends Component {
     this.setState({
       currQuery: queryURL.slice(0, queryURL.length - 1),
       pageNum: 0,
+      isLoading: true,
     });
 
     this.toggleHide("loadMoreButton");
@@ -122,6 +123,7 @@ class Home extends Component {
         this.setState({
           currentData: data,
           numOfTotalData: responseJson.total,
+          isLoading: false,
         });
 
         const isLastPage =
@@ -253,13 +255,11 @@ class Home extends Component {
               </form>
               {this.state.currQuery &&
                 this.state.currentData.length === 0 &&
-                this.state.pageNum !== 0 && (
+                !this.state.isLoading && (
                   <div id="notfound">Tidak ada hasil yang ditemukan!</div>
                 )}
 
-              {this.state.currQuery &&
-                this.state.currentData.length === 0 &&
-                this.state.pageNum === 0 && <div id="loading">Loading...</div>}
+              {this.state.isLoading && <div id="loading">Loading...</div>}
 
               <table id="tableID"></table>
 
