@@ -71,7 +71,6 @@ class Home extends Component {
     while (parent.hasChildNodes()) {
       parent.removeChild(parent.firstChild);
     }
-    document.getElementById("notfound").innerHTML = "";
 
     if (query === "") {
       return;
@@ -122,29 +121,14 @@ class Home extends Component {
           data.push(JSON.parse(JSON.stringify(payload[i])));
           newDataLength++;
         }
-        //Check the data of payload
-        if (data.length === 0) {
-          document.getElementById("notfound").innerHTML =
-            "Tidak ada hasil yang ditemukan!";
 
-          this.setState({
-            currentData: data,
-            numOfTotalData: responseJson.total,
-          });
-        } else {
-          document.getElementById("notfound").innerHTML = "";
-          // CreateTable(data);
-          this.setState({
-            currentData: data,
-            numOfTotalData: responseJson.total,
-          });
-        }
+        this.setState({
+          currentData: data,
+          numOfTotalData: responseJson.total,
+        });
 
         const isLastPage =
           this.state.numOfTotalData / 10 - 1 === this.state.pageNum;
-
-        console.log(newDataLength.length);
-        console.log(isLastPage);
 
         if (newDataLength === 10 && !isLastPage) {
           this.toggleShow("loadMoreButton");
@@ -270,7 +254,9 @@ class Home extends Component {
                 />
                 <button type="submit">↵</button>
               </form>
-              <div id="notfound"></div>
+              {this.state.currQuery && this.state.currentData.length === 0 && (
+                <div id="notfound">Tidak ada hasil yang ditemukan!</div>
+              )}
 
               <table id="tableID"></table>
 
