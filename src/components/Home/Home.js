@@ -260,7 +260,9 @@ class Home extends Component {
                   <div id="notfound">Tidak ada hasil yang ditemukan!</div>
                 )}
 
-              {this.state.isLoading && <div id="loading">Loading...</div>}
+              {this.state.isLoading && this.state.pageNum === 0 && (
+                <div id="loading">Loading...</div>
+              )}
 
               <table id="tableID"></table>
 
@@ -295,6 +297,7 @@ class Home extends Component {
                     backgroundColor: "#f1f1f1",
                     color: "grey",
                     border: "1px solid darkgrey",
+                    cursor: "not-allowed",
                   }
                 : {}
             }
