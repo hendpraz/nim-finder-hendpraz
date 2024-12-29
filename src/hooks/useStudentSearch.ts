@@ -1,43 +1,62 @@
-import { useState, useCallback, useEffect } from 'react';
-import { fetchStudents } from '../utils/api';
-import type { Student } from '../types/student';
+import { useState, useCallback, useEffect } from "react";
+import { fetchStudents } from "../utils/api";
+import type { Student } from "../types/student";
 
 const MIN_SEARCH_LENGTH = 3;
 
 export function useStudentSearch() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
+  const [total, setTotal] = useState(0);
+  const [isSimilar, setIsSimilar] = useState(false);
 
-  const loadStudents = useCallback(async (page: number, isLoadMore: boolean = false) => {
-    if (searchQuery.length < MIN_SEARCH_LENGTH) {
-      setStudents([]);
-      setError(null);
-      setHasMore(false);
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await fetchStudents(searchQuery, page);
-      
-      if (response.students.length === 0) {
+  const loadStudents = useCallback(
+    async (page: number, isLoadMore: boolean = false) => {
+      if (searchQuery.length < MIN_SEARCH_LENGTH) {
+        setStudents([]);
+        setError(null);
         setHasMore(false);
+        setTotal(0);
+        setIsSimilar(false);
         return;
       }
 
-      setStudents(prev => isLoadMore ? [...prev, ...response.students] : response.students);
-    } catch (err) {
-      setError('Failed to load students. Please try again later.');
-      console.error('Error loading students:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [searchQuery]);
+      try {
+        if (!isLoadMore) {
+          setIsInitialLoad(true);
+        }
+        setIsLoading(true);
+        setError(null);
+
+        const response = await fetchStudents(searchQuery, page);
+
+        setTotal(response.total);
+        setIsSimilar(response.isSimilar);
+
+        if (response.students.length === 0) {
+          setHasMore(false);
+          return;
+        }
+
+        setStudents((prev) =>
+          isLoadMore ? [...prev, ...response.students] : response.students
+        );
+        setHasMore(response.students.length > 0);
+      } catch (err) {
+        setError("Failed to load students. Please try again later.");
+        console.error("Error loading students:", err);
+      } finally {
+        setIsLoading(false);
+        setIsInitialLoad(false);
+      }
+    },
+    [searchQuery]
+  );
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -63,9 +82,12 @@ export function useStudentSearch() {
     searchQuery,
     students,
     isLoading,
+    isInitialLoad,
     error,
     hasMore,
     currentPage,
+    total,
+    isSimilar,
     handleSearch,
     handleLoadMore,
   };

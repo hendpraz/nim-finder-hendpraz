@@ -9,4 +9,6 @@ export interface PaginatedStudents {
   students: Student[];
   currentPage: number;
   query: string;
+  total: number;
+  isSimilar: boolean;
 }

@@ -7,6 +7,8 @@ export interface ApiResponse {
   };
   message: string;
   payload: StudentPayload[];
+  total: number;
+  is_similar: boolean;
 }
 
 export interface StudentPayload {
