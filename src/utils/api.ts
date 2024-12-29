@@ -5,11 +5,26 @@ import { transformApiResponse } from "./transformers";
 const API_BASE_URL =
   "https://07qw5uk5i4.execute-api.ap-southeast-1.amazonaws.com";
 
+const EVENT_TRACKING_URL =
+  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/events";
+
 export async function fetchStudents(
   query: string = "",
   page: number = 0
 ): Promise<PaginatedStudents> {
   try {
+    // Event Tracking: fetch students
+    fetch(EVENT_TRACKING_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        app: "nim-finder-hendpraz",
+        action: "fetch_students",
+        query: query,
+        page: page,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+
     const url = `${API_BASE_URL}/mahasiswa?query=${encodeURIComponent(
       query
     )}&page=${page}`;
