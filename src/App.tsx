@@ -9,16 +9,18 @@ export default function App() {
     searchQuery,
     students,
     isLoading,
+    isInitialLoad,
     error,
     hasMore,
-    currentPage,
+    total,
+    isSimilar,
     handleSearch,
     handleLoadMore,
   } = useStudentSearch();
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="flex items-center justify-center mb-8">
             <GraduationCap className="h-8 w-8 text-blue-600 mr-2" />
@@ -48,13 +50,17 @@ export default function App() {
               <>
                 <StudentsTable
                   students={students}
-                  isLoading={isLoading && currentPage === 0}
+                  isLoading={isLoading}
+                  isInitialLoad={isInitialLoad}
+                  total={total}
+                  isSimilar={isSimilar}
+                  searchQuery={searchQuery}
                 />
 
                 {students.length > 0 && hasMore && (
                   <LoadMoreButton
                     onClick={handleLoadMore}
-                    isLoading={isLoading && currentPage > 0}
+                    isLoading={isLoading}
                   />
                 )}
               </>
