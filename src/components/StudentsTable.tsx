@@ -12,7 +12,6 @@ interface StudentsTableProps {
 
 export function StudentsTable({
   students,
-  isLoading,
   isInitialLoad,
   total,
   isSimilar,
@@ -45,10 +44,7 @@ export function StudentsTable({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Faculty ID
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Major ID
+                NIM
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Name
@@ -61,11 +57,15 @@ export function StudentsTable({
           <tbody className="bg-white divide-y divide-gray-200">
             {students.map((student) => (
               <tr key={student.majorId} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {student.facultyId}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {student.majorId}
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">
+                    {student.majorId}
+                  </div>
+                  {student.facultyId !== student.majorId && (
+                    <div className="text-xs text-gray-500">
+                      {student.facultyId}
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {student.name}
