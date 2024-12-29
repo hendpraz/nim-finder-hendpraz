@@ -1,3 +1,4 @@
+import React from "react";
 import { GraduationCap } from "lucide-react";
 import { SearchBar } from "./components/SearchBar";
 import { StudentsTable } from "./components/StudentsTable";
@@ -17,6 +18,9 @@ export default function App() {
     handleSearch,
     handleLoadMore,
   } = useStudentSearch();
+
+  const showLoadMore =
+    students.length > 0 && hasMore && students.length < total;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -57,7 +61,7 @@ export default function App() {
                   searchQuery={searchQuery}
                 />
 
-                {students.length > 0 && hasMore && (
+                {showLoadMore && (
                   <LoadMoreButton
                     onClick={handleLoadMore}
                     isLoading={isLoading}
