@@ -21,6 +21,10 @@ export async function fetchStudents(
         action: "fetch_students",
         query: query,
         page: page,
+        meta: {
+          userAgent: navigator.userAgent,
+          referrer: document.referrer,
+        },
         timestamp: new Date().toISOString(),
       }),
     });
