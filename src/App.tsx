@@ -1,5 +1,6 @@
 import { GraduationCap } from "lucide-react";
 import { SearchBar } from "./components/SearchBar";
+// import { MajorFilter } from "./components/MajorFilter";
 import { StudentsTable } from "./components/StudentsTable";
 import { LoadMoreButton } from "./components/LoadMoreButton";
 import { useStudentSearch } from "./hooks/useStudentSearch";
@@ -7,6 +8,7 @@ import { useStudentSearch } from "./hooks/useStudentSearch";
 export default function App() {
   const {
     searchQuery,
+    // selectedMajor,
     students,
     isLoading,
     isInitialLoad,
@@ -15,6 +17,7 @@ export default function App() {
     total,
     isSimilar,
     handleSearch,
+    // handleMajorChange,
     handleLoadMore,
   } = useStudentSearch();
 
@@ -39,11 +42,18 @@ export default function App() {
           </div>
 
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <SearchBar
-              query={searchQuery}
-              onQueryChange={handleSearch}
-              minLength={3}
-            />
+            <div className="space-y-4">
+              <SearchBar
+                query={searchQuery}
+                onQueryChange={handleSearch}
+                minLength={0}
+              />
+
+              {/* <MajorFilter
+                selectedMajor={selectedMajor}
+                onMajorChange={handleMajorChange}
+              /> */}
+            </div>
 
             {error && (
               <div className="mt-4 p-4 text-sm text-red-700 bg-red-100 rounded-md">
@@ -51,28 +61,17 @@ export default function App() {
               </div>
             )}
 
-            {searchQuery.length < 3 ? (
-              <div className="mt-4 text-center text-gray-500">
-                Please enter at least 3 characters to search
-              </div>
-            ) : (
-              <>
-                <StudentsTable
-                  students={students}
-                  isLoading={isLoading}
-                  isInitialLoad={isInitialLoad}
-                  total={total}
-                  isSimilar={isSimilar}
-                  searchQuery={searchQuery}
-                />
+            <StudentsTable
+              students={students}
+              isLoading={isLoading}
+              isInitialLoad={isInitialLoad}
+              total={total}
+              isSimilar={isSimilar}
+              searchQuery={searchQuery}
+            />
 
-                {showLoadMore && (
-                  <LoadMoreButton
-                    onClick={handleLoadMore}
-                    isLoading={isLoading}
-                  />
-                )}
-              </>
+            {showLoadMore && (
+              <LoadMoreButton onClick={handleLoadMore} isLoading={isLoading} />
             )}
           </div>
         </div>

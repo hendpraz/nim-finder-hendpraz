@@ -1,23 +1,12 @@
-import type { StudentPayload } from "../types/api";
-import type { Student } from "../types/student";
-import type { ApiResponse } from "../types/api";
-import type { PaginatedStudents } from "../types/student";
+import { Student } from "../types/student";
+import { inferMajorName } from "./majorMapping";
 
-export function transformStudent(payload: StudentPayload): Student {
+export function transformStudent(data: [string, string, string?]): Student {
+  const [name, facultyId, majorId] = data;
   return {
-    name: payload.name,
-    facultyId: payload.nim_tpb,
-    majorId: payload.nim_jur,
-    major: payload.prodi,
-  };
-}
-
-export function transformApiResponse(data: ApiResponse): PaginatedStudents {
-  return {
-    students: data.payload.map(transformStudent),
-    currentPage: parseInt(data.query.page),
-    query: data.query.query,
-    total: data.total,
-    isSimilar: data.is_similar,
+    name,
+    facultyId,
+    majorId: majorId || facultyId, // Use facultyId as majorId if not provided
+    major: inferMajorName(facultyId, majorId),
   };
 }

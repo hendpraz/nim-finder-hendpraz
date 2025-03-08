@@ -1,11 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
-import { fetchStudents } from "../utils/api";
+import { searchStudents } from "../utils/search";
 import type { Student } from "../types/student";
 
-const MIN_SEARCH_LENGTH = 3;
+const EVENT_TRACKING_URL =
+  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/events";
 
 export function useStudentSearch() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedMajor, setSelectedMajor] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,16 +18,7 @@ export function useStudentSearch() {
   const [isSimilar, setIsSimilar] = useState(false);
 
   const loadStudents = useCallback(
-    async (page: number, isLoadMore: boolean = false) => {
-      if (searchQuery.length < MIN_SEARCH_LENGTH) {
-        setStudents([]);
-        setError(null);
-        setHasMore(false);
-        setTotal(0);
-        setIsSimilar(false);
-        return;
-      }
-
+    (page: number, isLoadMore: boolean = false) => {
       try {
         if (!isLoadMore) {
           setIsInitialLoad(true);
@@ -33,29 +26,42 @@ export function useStudentSearch() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetchStudents(searchQuery, page);
+        const result = searchStudents(searchQuery, page, selectedMajor);
 
-        setTotal(response.total);
-        setIsSimilar(response.isSimilar);
+        setTotal(result.total);
+        setIsSimilar(result.isSimilar);
 
-        if (response.students.length === 0) {
+        if (result.students.length === 0) {
           setHasMore(false);
           return;
         }
 
         setStudents((prev) =>
-          isLoadMore ? [...prev, ...response.students] : response.students
+          isLoadMore ? [...prev, ...result.students] : result.students
         );
-        setHasMore(response.students.length > 0);
+        setHasMore(result.students.length > 0);
       } catch (err) {
-        setError("Failed to load students. Please try again later.");
-        console.error("Error loading students:", err);
+        setError("An error occurred while searching. Please try again.");
+        console.error("Search error:", err);
       } finally {
         setIsLoading(false);
         setIsInitialLoad(false);
+
+        // Event Tracking: fetch students
+        fetch(EVENT_TRACKING_URL, {
+          method: "POST",
+          body: JSON.stringify({
+            app: "nim-finder-hendpraz",
+            action: "fetch_students",
+            query: searchQuery,
+            major: selectedMajor,
+            page: page,
+            timestamp: new Date().toISOString(),
+          }),
+        });
       }
     },
-    [searchQuery]
+    [searchQuery, selectedMajor]
   );
 
   useEffect(() => {
@@ -66,10 +72,14 @@ export function useStudentSearch() {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [searchQuery, loadStudents]);
+  }, [searchQuery, selectedMajor, loadStudents]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
+
+  const handleMajorChange = (major: string) => {
+    setSelectedMajor(major);
   };
 
   const handleLoadMore = () => {
@@ -80,15 +90,16 @@ export function useStudentSearch() {
 
   return {
     searchQuery,
+    selectedMajor,
     students,
     isLoading,
     isInitialLoad,
     error,
     hasMore,
-    currentPage,
     total,
     isSimilar,
     handleSearch,
+    handleMajorChange,
     handleLoadMore,
   };
 }
