@@ -47,22 +47,24 @@ export function useStudentSearch() {
         setIsLoading(false);
         setIsInitialLoad(false);
 
-        // Event Tracking: fetch students
-        fetch(EVENT_TRACKING_URL, {
-          method: "POST",
-          body: JSON.stringify({
-            app: "nim-finder-itb",
-            action: "fetch_students",
-            query: searchQuery,
-            major: selectedMajor,
-            page: page,
-            meta: {
-              userAgent: navigator.userAgent,
-              referrer: document.referrer,
-            },
-            timestamp: new Date().toISOString(),
-          }),
-        });
+        if (searchQuery) {
+          // Event Tracking: fetch students
+          fetch(EVENT_TRACKING_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              app: "nim-finder-itb",
+              action: "fetch_students",
+              query: searchQuery,
+              major: selectedMajor,
+              page: page,
+              meta: {
+                userAgent: navigator.userAgent,
+                referrer: document.referrer,
+              },
+              timestamp: new Date().toISOString(),
+            }),
+          });
+        }
       }
     },
     [searchQuery, selectedMajor]
