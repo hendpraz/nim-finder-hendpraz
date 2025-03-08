@@ -56,6 +56,10 @@ export function useStudentSearch() {
             query: searchQuery,
             major: selectedMajor,
             page: page,
+            meta: {
+              userAgent: navigator.userAgent,
+              referrer: document.referrer,
+            },
             timestamp: new Date().toISOString(),
           }),
         });
