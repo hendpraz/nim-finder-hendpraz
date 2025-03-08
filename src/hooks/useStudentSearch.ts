@@ -51,7 +51,7 @@ export function useStudentSearch() {
         fetch(EVENT_TRACKING_URL, {
           method: "POST",
           body: JSON.stringify({
-            app: "nim-finder-hendpraz",
+            app: "nim-finder-itb",
             action: "fetch_students",
             query: searchQuery,
             major: selectedMajor,
