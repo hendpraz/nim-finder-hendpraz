@@ -1,6 +1,6 @@
-import React from 'react';
-import { Student } from '../types/student';
-import { SearchResultsInfo } from './SearchResultsInfo';
+import React from "react";
+import { Student } from "../types/student";
+import { SearchResultsInfo } from "./SearchResultsInfo";
 
 interface StudentsTableProps {
   students: Student[];
@@ -11,19 +11,17 @@ interface StudentsTableProps {
   searchQuery: string;
 }
 
-export function StudentsTable({ 
-  students, 
+export function StudentsTable({
+  students,
   isLoading,
   isInitialLoad,
-  total, 
-  isSimilar, 
-  searchQuery 
+  total,
+  isSimilar,
+  searchQuery,
 }: StudentsTableProps) {
   if (isInitialLoad) {
     return (
-      <div className="text-center py-8 text-gray-500">
-        Loading students...
-      </div>
+      <div className="text-center py-8 text-gray-500">Loading students...</div>
     );
   }
 
@@ -47,15 +45,21 @@ export function StudentsTable({
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIM</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Major</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                NIM
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Major
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {students.map((student) => (
               <tr key={student.majorId} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="pr-5 lg:px-6 py-4">
                   <div className="text-sm font-medium text-gray-900">
                     {student.majorId}
                   </div>
@@ -65,8 +69,12 @@ export function StudentsTable({
                     </div>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.major}</td>
+                <td className="pr-5 lg:px-6 py-4 text-sm text-gray-500">
+                  {student.name}
+                </td>
+                <td className="lg:px-6 py-4 text-sm text-gray-500">
+                  {student.major}
+                </td>
               </tr>
             ))}
           </tbody>
