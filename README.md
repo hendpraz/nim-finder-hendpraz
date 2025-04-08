@@ -12,7 +12,7 @@
   <br>
 </h2>
 
-Deployed to [https://nim-finder-hdpz.netlify.app/#/](https://hendpraz.github.io/nim-finder/#/)
+Deployed to [https://nim-finder-hdpz.netlify.app](https://nim-finder-hdpz.netlify.app)
 
 ## Cara Memasang dan Menjalankan Aplikasi
 
