@@ -1,5 +1,17 @@
+import { useState, useEffect } from "react";
 import { Student } from "../types/student";
 import { SearchResultsInfo } from "./SearchResultsInfo";
+
+const SEARCH_SUGGESTIONS = [
+  "Hend pras",
+  "Hendry if",
+  "if17",
+  "stei 2017",
+  "135 Hen",
+];
+
+const TYPING_SPEED = 100; // ms per character
+const PAUSE_DURATION = 1000; // ms to pause at full text
 
 interface StudentsTableProps {
   students: Student[];
@@ -17,9 +29,56 @@ export function StudentsTable({
   isSimilar,
   searchQuery,
 }: StudentsTableProps) {
+  const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    const currentSuggestion = SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    let timeoutId: NodeJS.Timeout;
+
+    if (isTyping) {
+      // Typing forward
+      if (displayText.length < currentSuggestion.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(currentSuggestion.slice(0, displayText.length + 1));
+        }, TYPING_SPEED);
+      } else {
+        // Pause at full text
+        timeoutId = setTimeout(() => {
+          setIsTyping(false);
+        }, PAUSE_DURATION);
+      }
+    } else {
+      // Erasing
+      if (displayText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(displayText.slice(0, -1));
+        }, TYPING_SPEED / 2); // Erase faster than typing
+      } else {
+        // Move to next suggestion
+        setCurrentSuggestionIndex((prev) =>
+          prev === SEARCH_SUGGESTIONS.length - 1 ? 0 : prev + 1
+        );
+        setIsTyping(true);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayText, currentSuggestionIndex, isTyping]);
+
   if (isInitialLoad) {
     return (
       <div className="text-center py-8 text-gray-500">Loading students...</div>
+    );
+  }
+
+  if (students.length === 0 && searchQuery.length < 3) {
+    return (
+      <div className="text-center py-8 text-gray-500">
+        Try search "
+        <span className="text-blue-600 font-medium">{displayText}</span>"
+      </div>
     );
   }
 
@@ -57,7 +116,7 @@ export function StudentsTable({
           <tbody className="bg-white divide-y divide-gray-200">
             {students.map((student) => (
               <tr key={student.majorId} className="hover:bg-gray-50">
-                <td className="pr-6 lg:px-6 py-4">
+                <td className="px-6 py-4">
                   <div className="text-sm font-medium text-gray-900">
                     {student.majorId}
                   </div>
@@ -67,10 +126,10 @@ export function StudentsTable({
                     </div>
                   )}
                 </td>
-                <td className="pr-6 lg:px-6 py-4 text-sm text-gray-500">
+                <td className="px-6 py-4 text-sm text-gray-500">
                   {student.name}
                 </td>
-                <td className="pr-6 lg:px-6 py-4 text-sm text-gray-500">
+                <td className="px-6 py-4 text-sm text-gray-500">
                   {student.major}
                 </td>
               </tr>

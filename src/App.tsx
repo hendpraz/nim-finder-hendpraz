@@ -51,29 +51,23 @@ export default function App() {
               </div>
             )}
 
-            {searchQuery.length < 3 ? (
-              <div className="mt-4 text-center text-gray-500">
-                Please enter at least 3 characters to search
-              </div>
-            ) : (
-              <>
-                <StudentsTable
-                  students={students}
-                  isLoading={isLoading}
-                  isInitialLoad={isInitialLoad}
-                  total={total}
-                  isSimilar={isSimilar}
-                  searchQuery={searchQuery}
-                />
+            <>
+              <StudentsTable
+                students={students}
+                isLoading={isLoading}
+                isInitialLoad={isInitialLoad}
+                total={total}
+                isSimilar={isSimilar}
+                searchQuery={searchQuery}
+              />
 
-                {showLoadMore && (
-                  <LoadMoreButton
-                    onClick={handleLoadMore}
-                    isLoading={isLoading}
-                  />
-                )}
-              </>
-            )}
+              {showLoadMore && (
+                <LoadMoreButton
+                  onClick={handleLoadMore}
+                  isLoading={isLoading}
+                />
+              )}
+            </>
           </div>
         </div>
       </div>
