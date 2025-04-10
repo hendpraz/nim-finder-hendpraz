@@ -21,8 +21,31 @@ export default function App() {
     handleLoadMore,
   } = useStudentSearch();
 
+  const EVENT_TRACKING_URL =
+    "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/events";
+
   const showLoadMore =
     students.length > 0 && hasMore && students.length < total;
+
+  const trackIconClick = (action: string) => {
+    fetch(EVENT_TRACKING_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        app: "nim-finder-itb",
+        action,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+  };
+
+  const handleGithubClick = () => {
+    trackIconClick("github_click");
+  };
+
+  const handleInfoClick = () => {
+    trackIconClick("info_click");
+    setIsInfoModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -36,11 +59,12 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="text-gray-500 hover:text-gray-700 transition-colors"
                 title="View on GitHub"
+                onClick={handleGithubClick}
               >
                 <Github className="h-5 w-5" />
               </a>
               <button
-                onClick={() => setIsInfoModalOpen(true)}
+                onClick={handleInfoClick}
                 className="text-gray-500 hover:text-gray-700 transition-colors"
                 title="How to Use"
               >
