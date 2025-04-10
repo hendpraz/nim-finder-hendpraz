@@ -3,11 +3,12 @@ import { Student } from "../types/student";
 import { SearchResultsInfo } from "./SearchResultsInfo";
 
 const SEARCH_SUGGESTIONS = [
-  "Hend pras",
   "Hendry if",
   "if17",
+  "Hend pras",
   "stei 2017",
   "135 Hen",
+  "13517",
 ];
 
 const TYPING_SPEED = 100; // ms per character
