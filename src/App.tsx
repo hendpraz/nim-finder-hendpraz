@@ -50,7 +50,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="relative flex flex-col items-center justify-center mb-8 text-center">
             <div className="absolute right-0 top-0 flex space-x-2">
