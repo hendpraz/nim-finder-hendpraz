@@ -29,7 +29,7 @@ export async function fetchStudents(
       }),
     });
 
-    const url = `${API_BASE_URL}/mahasiswa-keyword?query=${encodeURIComponent(
+    const url = `${API_BASE_URL}/mahasiswa-complete?query=${encodeURIComponent(
       query
     )}&page=${page}`;
     const response = await fetch(url);

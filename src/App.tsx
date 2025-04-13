@@ -31,8 +31,9 @@ export default function App() {
     fetch(EVENT_TRACKING_URL, {
       method: "POST",
       body: JSON.stringify({
-        app: "nim-finder-itb",
+        app: "nim-finder-hendpraz",
         action,
+        query: "icon_click",
         timestamp: new Date().toISOString(),
       }),
     });
