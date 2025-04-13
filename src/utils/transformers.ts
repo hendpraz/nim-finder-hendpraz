@@ -9,6 +9,8 @@ export function transformStudent(payload: StudentPayload): Student {
     facultyId: payload.nim_tpb,
     majorId: payload.nim_jur,
     major: payload.prodi,
+    jenis_kelamin: payload.jenis_kelamin,
+    status: payload.status,
   };
 }
 

@@ -3,6 +3,8 @@ export interface Student {
   facultyId: string;
   majorId: string;
   major: string;
+  jenis_kelamin: string;
+  status: string;
 }
 
 export interface PaginatedStudents {

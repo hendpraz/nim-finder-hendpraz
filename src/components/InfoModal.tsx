@@ -41,13 +41,16 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
               <p className="text-sm">
                 <b>By Year:</b> "2016", "16"
               </p>
+              <p className="text-sm">
+                <b>By Combination:</b> "2017 if hendry", "Hendry Informatika"
+              </p>
             </div>
           </section>
 
           <section>
             <h3 className="text-lg font-semibold mb-2">Search Tips</h3>
             <ul className="list-disc list-inside space-y-2 text-sm">
-              <li>You can combine search terms: "2016 if hendry"</li>
+              <li>You can combine search terms: "2017 if hendry"</li>
               <li>Searches are case-insensitive</li>
               <li>
                 Partial matches work: "hen pra" will find "Hendry Prasetya"
@@ -55,25 +58,8 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
               <li>
                 The search shows similar results if exact matches aren't found
               </li>
-              <li>Results are sorted by relevance</li>
+              <li>Results are sorted ascending in alphabetical order</li>
             </ul>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-semibold mb-2">About NIM Format</h3>
-            <div className="space-y-2 text-sm">
-              <p>
-                <b>Format:</b> [Faculty/Major Code][Year][Sequential Number]
-              </p>
-              <p>
-                <b>Example:</b> 13517099
-              </p>
-              <ul className="list-disc list-inside pl-4">
-                <li>135: Major/Faculty Code (Informatics)</li>
-                <li>17: Year (2017)</li>
-                <li>099: Sequential Number</li>
-              </ul>
-            </div>
           </section>
         </div>
       </div>

@@ -16,4 +16,6 @@ export interface StudentPayload {
   nim_tpb: string;
   nim_jur: string;
   prodi: string;
+  jenis_kelamin: string;
+  status: string;
 }
