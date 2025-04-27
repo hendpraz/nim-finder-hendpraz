@@ -6,7 +6,7 @@ const API_BASE_URL =
   "https://07qw5uk5i4.execute-api.ap-southeast-1.amazonaws.com";
 
 const EVENT_TRACKING_URL =
-  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/events";
+  "https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com";
 
 export async function fetchStudents(
   query: string = "",
