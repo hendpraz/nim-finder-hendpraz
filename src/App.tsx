@@ -6,6 +6,13 @@ import { useStudentSearch } from "./hooks/useStudentSearch";
 import { useState } from "react";
 import { InfoModal } from "./components/InfoModal";
 
+// Add gtag type for Google Analytics
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const {
@@ -21,30 +28,27 @@ export default function App() {
     handleLoadMore,
   } = useStudentSearch();
 
-  const EVENT_TRACKING_URL =
-    "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/events";
 
   const showLoadMore =
     students.length > 0 && hasMore && students.length < total;
 
-  const trackIconClick = (action: string) => {
-    fetch(EVENT_TRACKING_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        app: "nim-finder-hendpraz",
-        action,
-        query: "icon_click",
-        timestamp: new Date().toISOString(),
-      }),
-    });
-  };
 
   const handleGithubClick = () => {
-    trackIconClick("github_click");
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "github_click", {
+        event_category: "engagement",
+        event_label: "GitHub Icon Click"
+      });
+    }
   };
 
   const handleInfoClick = () => {
-    trackIconClick("info_click");
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "info_click", {
+        event_category: "engagement",
+        event_label: "Info Icon Click"
+      });
+    }
     setIsInfoModalOpen(true);
   };
 
