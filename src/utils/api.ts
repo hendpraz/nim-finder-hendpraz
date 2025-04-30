@@ -2,15 +2,18 @@ import type { ApiResponse } from "../types/api";
 import type { PaginatedStudents } from "../types/student";
 import { transformApiResponse } from "./transformers";
 
-const API_BASE_URL =
+const ITB_BASE_URL =
   "https://07qw5uk5i4.execute-api.ap-southeast-1.amazonaws.com";
+const UI_BASE_URL =
+  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/";
 
 const EVENT_TRACKING_URL =
   "https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com";
 
 export async function fetchStudents(
   query: string = "",
-  page: number = 0
+  page: number = 0,
+  university: 'itb' | 'ui' = 'itb'
 ): Promise<PaginatedStudents> {
   try {
     // Event Tracking: fetch students
@@ -29,9 +32,12 @@ export async function fetchStudents(
       }),
     });
 
-    const url = `${API_BASE_URL}/mahasiswa-complete?query=${encodeURIComponent(
-      query
-    )}&page=${page}`;
+    let url = '';
+    if (university === 'itb') {
+      url = `${ITB_BASE_URL}/mahasiswa-complete?query=${encodeURIComponent(query)}&page=${page}`;
+    } else if (university === 'ui') {
+      url = `${UI_BASE_URL}/mahasiswa_ui?query=${encodeURIComponent(query)}&page=${page}`;
+    }
     const response = await fetch(url);
 
     if (!response.ok) {

@@ -5,6 +5,7 @@ export interface Student {
   major: string;
   jenis_kelamin: string;
   status: string;
+  jenjang?: string; // Only for UI
 }
 
 export interface PaginatedStudents {

@@ -2,13 +2,22 @@ import { useState, useEffect } from "react";
 import { Student } from "../types/student";
 import { SearchResultsInfo } from "./SearchResultsInfo";
 
-const SEARCH_SUGGESTIONS = [
+const ITB_SEARCH_SUGGESTIONS = [
   "Hendry if",
   "if17",
   "Hend pras",
   "stei 2017",
   "135 Hen",
   "13517",
+];
+
+const UI_SEARCH_SUGGESTIONS = [
+  "1706 Ilmu Komputer",
+  "1706 Magister",
+  "1706 Dokter Sarjana",
+  "1706 Ekonomi",
+  "Bahasa",
+  "Profesi"
 ];
 
 const TYPING_SPEED = 100; // ms per character
@@ -21,6 +30,7 @@ interface StudentsTableProps {
   total: number;
   isSimilar: boolean;
   searchQuery: string;
+  university: 'itb' | 'ui';
 }
 
 export function StudentsTable({
@@ -29,13 +39,14 @@ export function StudentsTable({
   total,
   isSimilar,
   searchQuery,
+  university,
 }: StudentsTableProps) {
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
-    const currentSuggestion = SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    const currentSuggestion = university === 'itb' ? ITB_SEARCH_SUGGESTIONS[currentSuggestionIndex] : UI_SEARCH_SUGGESTIONS[currentSuggestionIndex];
     let timeoutId: NodeJS.Timeout;
 
     if (isTyping) {
@@ -59,7 +70,7 @@ export function StudentsTable({
       } else {
         // Move to next suggestion
         setCurrentSuggestionIndex((prev) =>
-          prev === SEARCH_SUGGESTIONS.length - 1 ? 0 : prev + 1
+          prev === (university === 'itb' ? ITB_SEARCH_SUGGESTIONS.length : UI_SEARCH_SUGGESTIONS.length) - 1 ? 0 : prev + 1
         );
         setIsTyping(true);
       }
@@ -112,6 +123,11 @@ export function StudentsTable({
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Major
               </th>
+              {university === 'ui' && (
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Jenjang
+                </th>
+              )}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
@@ -136,6 +152,11 @@ export function StudentsTable({
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {student.major}
                 </td>
+                {university === 'ui' && (
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {student.jenjang || '-'}
+                  </td>
+                )}
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {student.status}
                 </td>

@@ -15,6 +15,7 @@ declare global {
 
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [university, setUniversity] = useState<'itb' | 'ui'>('itb');
   const {
     searchQuery,
     students,
@@ -26,8 +27,7 @@ export default function App() {
     isSimilar,
     handleSearch,
     handleLoadMore,
-  } = useStudentSearch();
-
+  } = useStudentSearch(university);
 
   const showLoadMore =
     students.length > 0 && hasMore && students.length < total;
@@ -80,16 +80,30 @@ export default function App() {
             <div className="flex items-center mb-2">
               <GraduationCap className="h-8 w-8 text-blue-600 mr-2" />
               <h1 className="text-3xl font-bold text-gray-900">
-                ITB NIM Finder
+                NIMFinder.com
               </h1>
             </div>
             <p className="text-gray-600">
-              Lengkap dari angkatan 2011 hingga 2024, termasuk mahasiswa S1, S2
-              dan S3.
+              Cari NIM dan nama mahasiswa dari berbagai universitas: ITB dan UI.
+            </p>
+            <p className="text-gray-600">
+              Data lengkap berbagai angkatan dan jenjang.
             </p>
           </div>
 
           <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="mb-4 flex items-center space-x-3">
+              <label htmlFor="university" className="text-sm font-medium text-gray-700">University:</label>
+              <select
+                id="university"
+                value={university}
+                onChange={e => setUniversity(e.target.value as 'itb' | 'ui')}
+                className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="itb">ITB</option>
+                <option value="ui">UI</option>
+              </select>
+            </div>
             <SearchBar
               query={searchQuery}
               onQueryChange={handleSearch}
@@ -110,6 +124,7 @@ export default function App() {
                 total={total}
                 isSimilar={isSimilar}
                 searchQuery={searchQuery}
+                university={university}
               />
 
               {showLoadMore && (

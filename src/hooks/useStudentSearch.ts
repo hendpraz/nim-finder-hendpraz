@@ -4,7 +4,9 @@ import type { Student } from "../types/student";
 
 const MIN_SEARCH_LENGTH = 3;
 
-export function useStudentSearch() {
+type University = 'itb' | 'ui';
+
+export function useStudentSearch(university: University = 'itb') {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [students, setStudents] = useState<Student[]>([]);
@@ -33,7 +35,7 @@ export function useStudentSearch() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetchStudents(searchQuery, page);
+        const response = await fetchStudents(searchQuery, page, university);
 
         setTotal(response.total);
         setIsSimilar(response.isSimilar);
@@ -59,14 +61,18 @@ export function useStudentSearch() {
   );
 
   useEffect(() => {
+    setStudents([]); // Clear students when university or query changes
+    setCurrentPage(0);
+    setHasMore(true);
+    setError(null);
+    setTotal(0);
+    setIsSimilar(false);
     const timeoutId = setTimeout(() => {
-      setCurrentPage(0);
-      setHasMore(true);
       loadStudents(0, false);
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [searchQuery, loadStudents]);
+  }, [searchQuery, university, loadStudents]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
