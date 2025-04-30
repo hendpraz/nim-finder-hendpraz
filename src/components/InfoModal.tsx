@@ -13,7 +13,7 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-xl font-semibold">How to Use ITB NIM Finder</h2>
+          <h2 className="text-xl font-semibold">How to Use NIMFinder.com</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
@@ -33,6 +33,9 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
                 <b>By NIM:</b> "13516099", "16516"
               </p>
               <p className="text-sm">
+                <b>By University:</b> "ITB", "UI", "UGM", "Telkom", "Binus", "ITS"
+              </p>
+              <p className="text-sm">
                 <b>By Major:</b> "Informatika", "IF", "135"
               </p>
               <p className="text-sm">
@@ -42,7 +45,7 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
                 <b>By Year:</b> "2016", "16"
               </p>
               <p className="text-sm">
-                <b>By Combination:</b> "2017 if hendry", "Hendry Informatika"
+                <b>By Combination:</b> "2017 IF UI", "Hendry Informatika ITB"
               </p>
             </div>
           </section>

@@ -11,6 +11,7 @@ export function transformStudent(payload: StudentPayload): Student {
     major: payload.prodi,
     jenis_kelamin: payload.jenis_kelamin,
     status: payload.status,
+    jenjang: payload.jenjang, // Only present for UI
   };
 }
 

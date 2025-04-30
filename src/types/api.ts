@@ -18,4 +18,5 @@ export interface StudentPayload {
   prodi: string;
   jenis_kelamin: string;
   status: string;
+  jenjang?: string; // Only for UI
 }
