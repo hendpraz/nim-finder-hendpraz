@@ -24,6 +24,7 @@ export async function fetchStudents(
         action: "fetch_students",
         query: query,
         page: page,
+        university: university,
         meta: {
           userAgent: navigator.userAgent,
           referrer: document.referrer,

@@ -3,7 +3,7 @@ import { SearchBar } from "./components/SearchBar";
 import { StudentsTable } from "./components/StudentsTable";
 import { LoadMoreButton } from "./components/LoadMoreButton";
 import { useStudentSearch } from "./hooks/useStudentSearch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InfoModal } from "./components/InfoModal";
 
 // Add gtag type for Google Analytics
@@ -13,9 +13,27 @@ declare global {
   }
 }
 
+// Utility function to track dropdown changes
+function trackDropdownChange(dropdownId: string, value: string): void {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", "dropdown_change", {
+      event_category: "interaction",
+      event_label: dropdownId,
+      value: value
+    });
+  }
+}
+
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [university, setUniversity] = useState<'itb' | 'ui'>('itb');
+  // Update the URL query param when university changes
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('university', university);
+    const newRelativePathQuery = window.location.pathname + '?' + params.toString();
+    window.history.replaceState(null, '', newRelativePathQuery);
+  }, [university]);
   const {
     searchQuery,
     students,
@@ -97,11 +115,15 @@ export default function App() {
               <select
                 id="university"
                 value={university}
-                onChange={e => setUniversity(e.target.value as 'itb' | 'ui')}
+                onChange={e => {
+                  const val = e.target.value as 'itb' | 'ui';
+                  setUniversity(val);
+                  trackDropdownChange('university', val);
+                }}
                 className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="itb">ITB</option>
-                <option value="ui">UI</option>
+                <option value="itb">Institut Teknologi Bandung</option>
+                <option value="ui">Universitas Indonesia</option>
               </select>
             </div>
             <SearchBar
