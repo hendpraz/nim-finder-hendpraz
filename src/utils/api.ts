@@ -3,9 +3,9 @@ import type { PaginatedStudents } from "../types/student";
 import { transformApiResponse } from "./transformers";
 
 const ITB_BASE_URL =
-  "https://07qw5uk5i4.execute-api.ap-southeast-1.amazonaws.com";
+  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com";
 const UI_BASE_URL =
-  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com/";
+  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com";
 
 const EVENT_TRACKING_URL =
   "https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com";
@@ -35,7 +35,7 @@ export async function fetchStudents(
 
     let url = '';
     if (university === 'itb') {
-      url = `${ITB_BASE_URL}/mahasiswa-complete?query=${encodeURIComponent(query)}&page=${page}`;
+      url = `${ITB_BASE_URL}/mahasiswa_itb?query=${encodeURIComponent(query)}&page=${page}`;
     } else if (university === 'ui') {
       url = `${UI_BASE_URL}/mahasiswa_ui?query=${encodeURIComponent(query)}&page=${page}`;
     }
