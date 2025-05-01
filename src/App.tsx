@@ -26,7 +26,11 @@ function trackDropdownChange(dropdownId: string, value: string): void {
 
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const [university, setUniversity] = useState<'itb' | 'ui'>('itb');
+  const [university, setUniversity] = useState<'itb' | 'ui'>(() => {
+  const params = new URLSearchParams(window.location.search);
+  const uni = params.get('university');
+  return uni === 'itb' || uni === 'ui' ? uni : 'itb';
+});
   // Update the URL query param when university changes
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
