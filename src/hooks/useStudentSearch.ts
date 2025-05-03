@@ -57,7 +57,7 @@ export function useStudentSearch(university: University = 'itb') {
         setIsInitialLoad(false);
       }
     },
-    [searchQuery]
+    [searchQuery, university]
   );
 
   useEffect(() => {
