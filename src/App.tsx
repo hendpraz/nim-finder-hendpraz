@@ -128,7 +128,7 @@ export default function App() {
               >
                 <option value="itb">Institut Teknologi Bandung</option>
                 <option value="ui">Universitas Indonesia</option>
-                <option value="unpad">Universitas Padjajaran</option>
+                <option value="unpad">Universitas Padjadjaran</option>
               </select>
             </div>
             <SearchBar
