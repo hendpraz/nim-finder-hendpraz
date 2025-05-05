@@ -26,10 +26,10 @@ function trackDropdownChange(dropdownId: string, value: string): void {
 
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const [university, setUniversity] = useState<'itb' | 'ui'>(() => {
+  const [university, setUniversity] = useState<'itb' | 'ui' | 'unpad'>(() => {
   const params = new URLSearchParams(window.location.search);
   const uni = params.get('university');
-  return uni === 'itb' || uni === 'ui' ? uni : 'itb';
+  return uni === 'itb' || uni === 'ui' || uni === 'unpad' ? uni : 'itb';
 });
   // Update the URL query param when university changes
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function App() {
               </h1>
             </div>
             <p className="text-gray-600">
-              Cari NIM dan nama mahasiswa dari berbagai universitas: ITB dan UI.
+              Cari NIM dan nama mahasiswa dari berbagai universitas: ITB, UI, dan UNPAD.
             </p>
             <p className="text-gray-600">
               Data lengkap berbagai angkatan dan jenjang.
@@ -128,6 +128,7 @@ export default function App() {
               >
                 <option value="itb">Institut Teknologi Bandung</option>
                 <option value="ui">Universitas Indonesia</option>
+                <option value="unpad">Universitas Padjajaran</option>
               </select>
             </div>
             <SearchBar

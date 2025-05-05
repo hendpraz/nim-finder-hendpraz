@@ -5,7 +5,7 @@ import { SearchResultsInfo } from "./SearchResultsInfo";
 const ITB_SEARCH_SUGGESTIONS = [
   "Hendry if",
   "if17",
-  "Hend pras",
+  "Lulus 2023",
   "stei 2017",
   "135 Hen",
   "13517",
@@ -16,8 +16,17 @@ const UI_SEARCH_SUGGESTIONS = [
   "1706 Magister",
   "1706 Dokter Sarjana",
   "1706 Ekonomi",
-  "Bahasa",
-  "Profesi"
+  "Lulus 2025",
+  "Sastra"
+];
+
+const UNPAD_SEARCH_SUGGESTIONS = [
+  "Farmasi",
+  "Hukum",
+  "Kedokteran",
+  "Ekonomi",
+  "Sastra",
+  "Lulus 2024"
 ];
 
 const TYPING_SPEED = 100; // ms per character
@@ -30,7 +39,7 @@ interface StudentsTableProps {
   total: number;
   isSimilar: boolean;
   searchQuery: string;
-  university: 'itb' | 'ui';
+  university: 'itb' | 'ui' | 'unpad';
 }
 
 export function StudentsTable({
@@ -46,7 +55,14 @@ export function StudentsTable({
   const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
-    const currentSuggestion = university === 'itb' ? ITB_SEARCH_SUGGESTIONS[currentSuggestionIndex] : UI_SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    let currentSuggestion = '';
+    if (university === 'itb') {
+      currentSuggestion = ITB_SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    } else if (university === 'ui') {
+      currentSuggestion = UI_SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    } else if (university === 'unpad') {
+      currentSuggestion = UNPAD_SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    }
     let timeoutId: NodeJS.Timeout;
 
     if (isTyping) {
