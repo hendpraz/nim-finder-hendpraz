@@ -6,6 +6,8 @@ const ITB_BASE_URL =
   "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com";
 const UI_BASE_URL =
   "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com";
+const UNPAD_BASE_URL =
+  "https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com"; // If different, adjust accordingly
 
 const EVENT_TRACKING_URL =
   "https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com";
@@ -13,7 +15,7 @@ const EVENT_TRACKING_URL =
 export async function fetchStudents(
   query: string = "",
   page: number = 0,
-  university: 'itb' | 'ui' = 'itb'
+  university: 'itb' | 'ui' | 'unpad' = 'itb'
 ): Promise<PaginatedStudents> {
   try {
     // Event Tracking: fetch students
@@ -38,6 +40,8 @@ export async function fetchStudents(
       url = `${ITB_BASE_URL}/mahasiswa_itb?query=${encodeURIComponent(query)}&page=${page}`;
     } else if (university === 'ui') {
       url = `${UI_BASE_URL}/mahasiswa_ui?query=${encodeURIComponent(query)}&page=${page}`;
+    } else if (university === 'unpad') {
+      url = `${UNPAD_BASE_URL}/mahasiswa_unpad?query=${encodeURIComponent(query)}&page=${page}`;
     }
     const response = await fetch(url);
 
