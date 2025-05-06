@@ -30,10 +30,7 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
                 <b>By Name:</b> "Hendry Prasetya", "Hend Pras"
               </p>
               <p className="text-sm">
-                <b>By NIM:</b> "13516099", "16516"
-              </p>
-              <p className="text-sm">
-                <b>By University:</b> "ITB", "UI", "UGM", "Telkom", "Binus", "ITS"
+                <b>By NIM:</b> "13517105", "16517"
               </p>
               <p className="text-sm">
                 <b>By Major:</b> "Informatika", "IF", "135"
@@ -45,7 +42,10 @@ export function InfoModal({ isOpen, onClose }: InfoModalProps) {
                 <b>By Year:</b> "2016", "16"
               </p>
               <p className="text-sm">
-                <b>By Combination:</b> "2017 IF UI", "Hendry Informatika ITB"
+                <b>By Status:</b> "Aktif", "Lulus", "Lulus 2024/2025 Genap"
+              </p>
+              <p className="text-sm">
+                <b>By Combination:</b> "Hendry Informatika ITB", "Mesin 2021 Lulus"
               </p>
             </div>
           </section>
