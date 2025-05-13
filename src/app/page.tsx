@@ -20,11 +20,11 @@ declare global {
 
 // Utility function to track dropdown changes
 function trackDropdownChange(dropdownId: string, value: string): void {
-  if (typeof window !== "undefined" && typeof window.gtag === "function") {
-    window.gtag("event", "dropdown_change", {
-      event_category: "interaction",
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', 'dropdown_change', {
+      event_category: 'interaction',
       event_label: dropdownId,
-      value: value
+      value: value,
     });
   }
 }
@@ -62,19 +62,19 @@ export default function App() {
     students.length > 0 && hasMore && students.length < total;
 
   const handleGithubClick = () => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("event", "github_click", {
-        event_category: "engagement",
-        event_label: "GitHub Icon Click"
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'github_click', {
+        event_category: 'engagement',
+        event_label: 'GitHub Icon Click',
       });
     }
   };
 
   const handleInfoClick = () => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("event", "info_click", {
-        event_category: "engagement",
-        event_label: "Info Icon Click"
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'info_click', {
+        event_category: 'engagement',
+        event_label: 'Info Icon Click',
       });
     }
     setIsInfoModalOpen(true);
