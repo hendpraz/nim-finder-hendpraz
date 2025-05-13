@@ -12,21 +12,21 @@ import { SearchBar } from '@/components/SearchBar';
 import { StudentsTable } from '@/components/StudentsTable';
 
 // Add gtag type for Google Analytics
-// declare global {
-//   interface Window {
-//     gtag?: (...args: any[]) => void;
-//   }
-// }
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
 
 // Utility function to track dropdown changes
-function trackDropdownChange(_dropdownId: string, _value: string): void {
-  // if (typeof window !== "undefined" && typeof window.gtag === "function") {
-  //   window.gtag("event", "dropdown_change", {
-  //     event_category: "interaction",
-  //     event_label: dropdownId,
-  //     value: value
-  //   });
-  // }
+function trackDropdownChange(dropdownId: string, value: string): void {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", "dropdown_change", {
+      event_category: "interaction",
+      event_label: dropdownId,
+      value: value
+    });
+  }
 }
 
 export default function App() {
@@ -62,21 +62,21 @@ export default function App() {
     students.length > 0 && hasMore && students.length < total;
 
   const handleGithubClick = () => {
-    // if (typeof window !== "undefined" && typeof window.gtag === "function") {
-    //   window.gtag("event", "github_click", {
-    //     event_category: "engagement",
-    //     event_label: "GitHub Icon Click"
-    //   });
-    // }
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "github_click", {
+        event_category: "engagement",
+        event_label: "GitHub Icon Click"
+      });
+    }
   };
 
   const handleInfoClick = () => {
-    // if (typeof window !== "undefined" && typeof window.gtag === "function") {
-    //   window.gtag("event", "info_click", {
-    //     event_category: "engagement",
-    //     event_label: "Info Icon Click"
-    //   });
-    // }
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "info_click", {
+        event_category: "engagement",
+        event_label: "Info Icon Click"
+      });
+    }
     setIsInfoModalOpen(true);
   };
 

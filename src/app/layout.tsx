@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import * as React from 'react';
+import Script from 'next/script';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
@@ -56,6 +57,20 @@ export default function RootLayout({
 }) {
   return (
     <html>
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-RC248ZE10K`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-RC248ZE10K');
+          `}
+        </Script>
+      </head>
       <body>{children}</body>
     </html>
   );
