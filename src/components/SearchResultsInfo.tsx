@@ -1,5 +1,3 @@
-import React from "react";
-
 interface SearchResultsInfoProps {
   displayedCount: number;
   totalCount: number;
@@ -14,14 +12,14 @@ export function SearchResultsInfo({
   query,
 }: SearchResultsInfoProps) {
   return (
-    <div className="mt-4 mb-2">
+    <div className='mt-4 mb-2'>
       {isSimilar || totalCount == null || totalCount <= 0 ? (
-        <div className="text-amber-600 mb-2">
+        <div className='text-amber-600 mb-2'>
           Couldn't find the exact match of "{query}", here's the suggestion:
         </div>
       ) : null}
       {totalCount > 0 && (
-        <div className="text-sm text-gray-600">
+        <div className='text-sm text-gray-600'>
           Displaying {displayedCount} out of {totalCount} students
         </div>
       )}
