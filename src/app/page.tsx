@@ -1,6 +1,6 @@
 'use client';
 
-import { Github, GraduationCap, Info } from 'lucide-react';
+import { BookOpen, Github, GraduationCap, Info } from 'lucide-react';
 import { useState } from 'react';
 import '@/lib/env';
 
@@ -82,9 +82,9 @@ export default function App() {
 
   return (
     <div className='min-h-screen bg-gray-100'>
-      <div className='max-w-5xl mx-auto py-6 sm:px-6 lg:px-8'>
+      <div className='max-w-5xl mx-auto sm:py-6 sm:px-6 lg:px-8'>
         <div className='px-4 py-6 sm:px-0'>
-          <div className='relative flex flex-col items-center justify-center mb-8 text-center'>
+          <div className='relative flex flex-col items-center justify-center mb-8 text-center pt-6 sm:pt-0'>
             <div className='absolute right-0 top-0 flex space-x-2'>
               <a
                 href='https://github.com/hendpraz/nim-finder-hendpraz'
@@ -95,6 +95,15 @@ export default function App() {
                 onClick={handleGithubClick}
               >
                 <Github className='h-5 w-5' />
+              </a>
+              <a
+                href='https://blog.nimfinder.com'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-gray-500 hover:text-gray-700 transition-colors'
+                title='Visit Blog'
+              >
+                <BookOpen className='h-5 w-5' />
               </a>
               <button
                 onClick={handleInfoClick}
