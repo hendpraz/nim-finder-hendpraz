@@ -24,6 +24,7 @@ module.exports = {
       { props: 'never', children: 'never' },
     ],
     '@typescript-eslint/no-inferrable-types': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
 
     //#region  //*=========== Unused Import ===========
     '@typescript-eslint/no-unused-vars': 'off',
