@@ -1,13 +1,15 @@
-import { useState, useCallback, useEffect } from "react";
-import { fetchStudents } from "../utils/api";
-import type { Student } from "../types/student";
+import { useCallback, useEffect, useState } from 'react';
+
+import { fetchStudents } from '@/lib/api';
+
+import { Student } from '@/types/student';
 
 const MIN_SEARCH_LENGTH = 3;
 
 type University = 'itb' | 'ui' | 'unpad';
 
 export function useStudentSearch(university: University = 'itb') {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +20,7 @@ export function useStudentSearch(university: University = 'itb') {
   const [isSimilar, setIsSimilar] = useState(false);
 
   const loadStudents = useCallback(
-    async (page: number, isLoadMore: boolean = false) => {
+    async (page: number, isLoadMore = false) => {
       if (searchQuery.length < MIN_SEARCH_LENGTH) {
         setStudents([]);
         setError(null);
@@ -50,8 +52,8 @@ export function useStudentSearch(university: University = 'itb') {
         );
         setHasMore(response.students.length > 0);
       } catch (err) {
-        setError("Failed to load students. Please try again later.");
-        console.error("Error loading students:", err);
+        setError('Failed to load students. Please try again later.');
+        // console.error('Error loading students:', err);
       } finally {
         setIsLoading(false);
         setIsInitialLoad(false);
