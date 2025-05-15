@@ -6,29 +6,29 @@ import { Student } from '@/types/student';
 
 const ITB_SEARCH_SUGGESTIONS = [
   'Hendry if',
-  'if17',
+  'if21 Lulus',
   'Lulus 2023',
-  'stei 2017',
-  '135 Hen',
-  '13517',
+  'stei 2020',
+  'Aktif 13522',
+  '13520 Lulus',
 ];
 
 const UI_SEARCH_SUGGESTIONS = [
   '1706 Ilmu Komputer',
-  '1706 Magister',
-  '1706 Dokter Sarjana',
+  '1706 Lulus',
+  '2206 Aktif',
   '1706 Ekonomi',
-  'Lulus 2025',
-  'Sastra',
+  'Lulus 2025 Genap',
+  '2006 Dokter',
 ];
 
 const UNPAD_SEARCH_SUGGESTIONS = [
-  'Farmasi',
-  'Hukum',
-  'Kedokteran',
-  'Ekonomi',
-  'Sastra',
-  'Lulus 2024',
+  'Farmasi Lulus 2025',
+  'Hukum Lulus 2025',
+  'Dokter Lulus 2025',
+  'Ekonomi Aktif',
+  'Sastra Lulus 2024',
+  'Lulus 2024 Ganjil',
 ];
 
 const TYPING_SPEED = 100; // ms per character

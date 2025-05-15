@@ -18,23 +18,6 @@ export async function fetchStudents(
   university: 'itb' | 'ui' | 'unpad' = 'itb'
 ): Promise<PaginatedStudents> {
   try {
-    // Event Tracking: fetch students
-    fetch(EVENT_TRACKING_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        app: 'nim-finder-hendpraz',
-        action: 'fetch_students',
-        query: query,
-        page: page,
-        university: university,
-        meta: {
-          userAgent: navigator.userAgent,
-          referrer: document.referrer,
-        },
-        timestamp: new Date().toISOString(),
-      }),
-    });
-
     let url = '';
     if (university === 'itb') {
       url = `${ITB_BASE_URL}/mahasiswa_itb?query=${encodeURIComponent(
@@ -63,6 +46,24 @@ export async function fetchStudents(
     if (!data || typeof data !== 'object') {
       throw new Error('Invalid response format');
     }
+
+    // Event Tracking: fetch students
+    fetch(EVENT_TRACKING_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        app: 'nim-finder-hendpraz',
+        action: 'fetch_students',
+        query: query,
+        page: page,
+        university: university,
+        meta: {
+          userAgent: navigator.userAgent,
+          referrer: document.referrer,
+        },
+        timestamp: new Date().toISOString(),
+        dataLength: data.payload.length,
+      }),
+    });
 
     return transformApiResponse(data);
   } catch (error) {
