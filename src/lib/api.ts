@@ -61,7 +61,7 @@ export async function fetchStudents(
           referrer: document.referrer,
         },
         timestamp: new Date().toISOString(),
-        dataLength: data.total,
+        dataLength: data.total || data.payload.length,
       }),
     });
 
