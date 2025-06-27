@@ -187,17 +187,17 @@ export default function PDDIKTISearchPage() {
                           Name
                         </th>
                         <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          University
+                          NIM
                         </th>
                         <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Program
+                          Perguruan Tinggi
                         </th>
                         <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Level
+                          Prodi
                         </th>
-                        <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Status
-                        </th>
+                        {/* <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                          Aksi
+                        </th> */}
                       </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200'>
@@ -212,25 +212,19 @@ export default function PDDIKTISearchPage() {
                             </div>
                           </td>
                           <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                            {result.nim}
+                          </td>
+                          <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                             {result.nama_pt}
                           </td>
                           <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                             {result.nama_prodi}
                           </td>
-                          <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                            {result.jenjang}
-                          </td>
-                          <td className='px-6 py-4 whitespace-nowrap'>
-                            <span
-                              className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                result.status === 'Aktif'
-                                  ? 'bg-green-100 text-green-800'
-                                  : 'bg-gray-100 text-gray-800'
-                              }`}
-                            >
-                              {result.status}
-                            </span>
-                          </td>
+                          {/* <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                            <button className='text-blue-600 hover:text-blue-900'>
+                              Detail
+                            </button>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>
