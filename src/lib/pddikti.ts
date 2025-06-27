@@ -1,6 +1,7 @@
 export interface PDDIKTIResult {
   id: string;
   nama: string;
+  nim: string;
   nama_pt: string;
   nama_prodi: string;
   jenjang: string;
