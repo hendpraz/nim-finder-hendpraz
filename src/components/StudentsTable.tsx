@@ -126,6 +126,16 @@ export function StudentsTable({
     );
   }
 
+  const getStudentStatus = (status: string) => {
+    if (status?.toLowerCase().includes('undur')) {
+      const statusSplit = status.split('-');
+
+      return 'Pengunduran-' + statusSplit[1];
+    }
+
+    return status;
+  };
+
   return (
     <>
       <SearchResultsInfo
@@ -182,7 +192,7 @@ export function StudentsTable({
                   </td>
                 )}
                 <td className='px-6 py-4 text-sm text-gray-500'>
-                  {student.status}
+                  {getStudentStatus(student.status)}
                 </td>
               </tr>
             ))}
