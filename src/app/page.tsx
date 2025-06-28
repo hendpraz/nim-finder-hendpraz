@@ -97,7 +97,7 @@ export default function App() {
                 <Github className='h-5 w-5' />
               </a>
               <a
-                href='https://blog.nimfinder.com'
+                href='https://nimfinder.blogspot.com/'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='text-gray-500 hover:text-gray-700 transition-colors'
