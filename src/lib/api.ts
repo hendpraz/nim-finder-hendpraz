@@ -7,7 +7,7 @@ const ITB_BASE_URL =
 const UI_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UNPAD_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com'; // If different, adjust accordingly
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 
 const EVENT_TRACKING_URL =
   'https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com';

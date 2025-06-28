@@ -1,6 +1,6 @@
 export const siteConfig = {
-  title: 'NIMFinder.com - Cari Mahasiswa ITB, UI, dan UNPAD',
+  title: 'NIMFinder.com - Cari Data Mahasiswa Indonesia',
   description:
-    'NIMFinder.com. Cari Nama/NIM Mahasiswa ITB, UI, dan UNPAD di sini. NIM Finder (NPM Finder) terlengkap dari angkatan 2011 hingga angkatan 2024. Termasuk mahasiswa S1, S2, dan S3. UI NPM Finder, ITB NIM Finder, UNPAD NPM Finder.',
+    'NIMFinder.com - Alternatif PDDIKTI. Cari semua data mahasiswa di Indonesia via PDDIKTI. Dilengkapi fitur Smart Search untuk Nama/NIM Mahasiswa ITB, UI, dan UNPAD di sini - ITB NIM Finder, UI NPM Finder, UNPAD NPM Finder. Termasuk mahasiswa S1, S2, dan S3.',
   url: 'https://nimfinder.com',
 };
