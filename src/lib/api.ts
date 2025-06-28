@@ -2,13 +2,12 @@ import { transformApiResponse } from './transformers';
 import type { ApiResponse } from '../types/api';
 import type { PaginatedStudents } from '../types/student';
 
-// TODO: Switch to new Nodejs API SST v2
 const ITB_BASE_URL =
-  'https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com';
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UI_BASE_URL =
-  'https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com';
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UNPAD_BASE_URL =
-  'https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com'; // If different, adjust accordingly
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com'; // If different, adjust accordingly
 
 const EVENT_TRACKING_URL =
   'https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com';
