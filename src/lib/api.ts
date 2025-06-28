@@ -2,6 +2,7 @@ import { transformApiResponse } from './transformers';
 import type { ApiResponse } from '../types/api';
 import type { PaginatedStudents } from '../types/student';
 
+// TODO: Switch to new Nodejs API SST v2
 const ITB_BASE_URL =
   'https://6op2jljcv5.execute-api.ap-southeast-1.amazonaws.com';
 const UI_BASE_URL =
