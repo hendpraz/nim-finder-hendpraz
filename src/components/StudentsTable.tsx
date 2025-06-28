@@ -130,10 +130,16 @@ export function StudentsTable({
     if (status?.toLowerCase().includes('undur')) {
       const statusSplit = status.split('-');
 
-      return 'Pengunduran-' + statusSplit[1];
+      return (
+        <td className='px-6 py-4 text-sm text-gray-500'>
+          Mengajukan Pengunduran-
+          <br />
+          {statusSplit[1]}
+        </td>
+      );
     }
 
-    return status;
+    return <td className='px-6 py-4 text-sm text-gray-500'>{status}</td>;
   };
 
   return (
@@ -191,9 +197,8 @@ export function StudentsTable({
                     {student.jenjang || '-'}
                   </td>
                 )}
-                <td className='px-6 py-4 text-sm text-gray-500'>
-                  {getStudentStatus(student.status)}
-                </td>
+
+                {getStudentStatus(student.status)}
               </tr>
             ))}
           </tbody>
