@@ -123,7 +123,8 @@ export default function App() {
               dan UNPAD.
             </p>
             <p className='text-gray-600'>
-              Dilengkapi dengan fitur pencarian fleksibel seperti "if17"
+              Dilengkapi dengan fitur pencarian fleksibel seperti "if17" dan
+              "Lulus 2020"
             </p>
           </div>
 
