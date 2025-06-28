@@ -140,16 +140,16 @@ export default function PDDIKTISearchPage() {
   };
 
   const getStatusColor = (status: string) => {
-    if (status?.toLowerCase().includes('non-aktif')) {
+    if (
+      status?.toLowerCase().includes('non-aktif') ||
+      status?.toLowerCase().includes('undur')
+    ) {
       return 'bg-yellow-100 text-yellow-800';
     } else if (status?.toLowerCase().includes('aktif')) {
       return 'bg-green-100 text-green-800';
     } else if (status?.toLowerCase().includes('lulus')) {
       return 'bg-blue-100 text-blue-800';
-    } else if (
-      status?.toLowerCase().includes('undur') ||
-      status?.toLowerCase().includes('dropout')
-    ) {
+    } else if (status?.toLowerCase().includes('keluar')) {
       return 'bg-red-100 text-red-800';
     } else {
       return 'bg-gray-100 text-gray-800';
@@ -421,13 +421,21 @@ export default function PDDIKTISearchPage() {
                       </div>
                       <div>
                         <label className='block text-sm font-medium text-gray-700'>
-                          Gender
+                          Jenis Kelamin
                         </label>
                         <p className='mt-1 text-sm text-gray-900'>
                           {getGenderDisplay(selectedDetail.jenis_kelamin)}
                         </p>
                       </div>
-                      <div className='md:col-span-2'>
+                      <div>
+                        <label className='block text-sm font-medium text-gray-700'>
+                          Tanggal Masuk
+                        </label>
+                        <p className='mt-1 text-sm text-gray-900'>
+                          {formatDate(selectedDetail.tanggal_masuk)}
+                        </p>
+                      </div>
+                      <div>
                         <label className='block text-sm font-medium text-gray-700'>
                           Current Status
                         </label>
@@ -476,14 +484,6 @@ export default function PDDIKTISearchPage() {
                         </label>
                         <p className='mt-1 text-sm text-gray-900'>
                           {selectedDetail.jenjang}
-                        </p>
-                      </div>
-                      <div>
-                        <label className='block text-sm font-medium text-gray-700'>
-                          Tanggal Masuk
-                        </label>
-                        <p className='mt-1 text-sm text-gray-900'>
-                          {formatDate(selectedDetail.tanggal_masuk)}
                         </p>
                       </div>
                       <div>

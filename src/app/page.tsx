@@ -83,7 +83,7 @@ export default function App() {
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='max-w-5xl mx-auto sm:py-6 sm:px-6 lg:px-8'>
-        <div className='px-4 py-6 sm:px-0'>
+        <div className='px-4 py-2 sm:px-0'>
           <div className='relative flex flex-col items-center justify-center mb-8 text-center pt-6 sm:pt-0'>
             <div className='absolute right-0 top-0 flex space-x-2'>
               <a
@@ -114,18 +114,16 @@ export default function App() {
               </button>
             </div>
 
-            <div className='flex items-center mb-2'>
+            <div className='flex items-center mb-1'>
               <GraduationCap className='h-8 w-8 text-blue-600 mr-2' />
-              <h1 className='text-3xl font-bold text-gray-900'>
-                NIMFinder.com
-              </h1>
+              <h1 className='text-3xl font-bold text-gray-900'>Smart Search</h1>
             </div>
-            <p className='text-gray-600'>
+            <p className='text-gray-600 mt-2'>
               Cari NIM dan nama mahasiswa dari berbagai universitas: ITB, UI,
               dan UNPAD.
             </p>
             <p className='text-gray-600'>
-              Data lengkap berbagai angkatan dan jenjang.
+              Dilengkapi dengan fitur pencarian fleksibel seperti "if17"
             </p>
           </div>
 
