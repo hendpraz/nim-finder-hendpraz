@@ -178,8 +178,10 @@ export default function PDDIKTISearchPage() {
             </div>
             <p className='text-gray-600 max-w-2xl mx-auto'>
               Search directly from PDDIKTI (Pangkalan Data Pendidikan Tinggi)
-              database. Find students, lecturers, and study programs from all
-              universities in Indonesia.
+              database.
+            </p>
+            <p className='text-gray-600 max-w-2xl mx-auto'>
+              Find students from all universities in Indonesia.
             </p>
           </div>
 
