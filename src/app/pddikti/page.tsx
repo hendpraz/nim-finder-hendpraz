@@ -98,12 +98,35 @@ export default function PDDIKTISearchPage() {
         `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti/detail?id=${id}`
       );
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch detail data');
-      }
-
       const detailData = await response.json();
-      setSelectedDetail(detailData);
+
+      if (!response.ok || detailData.success === false) {
+        if (detailData.errorSource === 'PDDIKTI_API') {
+          setDetailError(
+            'Failed to load detail information. Please try again. Possible cause: PDDIKTI API is under maintenance or down.'
+          );
+        } else {
+          setDetailError(
+            'Failed to load detail information. Please try again. Possible cause: Network error contacting PDDIKTI API.'
+          );
+        }
+
+        if (
+          typeof window !== 'undefined' &&
+          typeof window.gtag === 'function'
+        ) {
+          window.gtag('event', 'view_detail', {
+            event_category: 'interaction',
+            event_label: 'pddikti_mhs_detail',
+            value: id,
+            error: detailData.error,
+            errorSource: detailData.errorSource,
+            message: detailData.message,
+          });
+        }
+
+        return;
+      }
 
       if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
         window.gtag('event', 'view_detail', {
@@ -112,8 +135,24 @@ export default function PDDIKTISearchPage() {
           value: id,
         });
       }
+
+      setSelectedDetail(detailData);
     } catch (err) {
-      setDetailError('Failed to load detail information. Please try again.');
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('event', 'view_detail', {
+          event_category: 'interaction',
+          event_label: 'pddikti_mhs_detail',
+          value: id,
+          error: true,
+          errorSource: 'NETWORK',
+          message:
+            'Failed to load detail information. Please try again. Possible cause: Network error contacting PDDIKTI API.',
+        });
+      }
+
+      setDetailError(
+        'Failed to load detail information. Please try again. Possible cause: PDDIKTI API is under maintenance or down.'
+      );
       // console.error('Detail fetch error:', err);
     } finally {
       setIsDetailLoading(false);
