@@ -1,7 +1,8 @@
 'use client';
 
 import { BookOpen, Github, GraduationCap, Info } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { SiGooglesheets } from 'react-icons/si';
 import '@/lib/env';
 
 import { useStudentSearch } from '@/hooks/useStudentSearch';
@@ -80,6 +81,24 @@ export default function App() {
     setIsInfoModalOpen(true);
   };
 
+  const [showSheetsModal, setShowSheetsModal] = useState(false);
+  const sheetsModalRef = useRef<HTMLDivElement>(null);
+
+  function handleSheetsClick() {
+    setShowSheetsModal(true);
+  }
+
+  function handleSheetsModalClose() {
+    setShowSheetsModal(false);
+  }
+
+  // Dismiss modal when clicking outside
+  function handleSheetsModalBackdrop(e: React.MouseEvent<HTMLDivElement>) {
+    if (e.target === sheetsModalRef.current) {
+      setShowSheetsModal(false);
+    }
+  }
+
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='max-w-5xl mx-auto sm:py-6 sm:px-6 lg:px-8'>
@@ -100,11 +119,18 @@ export default function App() {
                 href='https://nimfinder.blogspot.com/'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-gray-500 hover:text-gray-700 transition-colors'
+                className='text-gray-500 hover:text-gray-700 transition-colors hidden'
                 title='Visit Blog'
               >
                 <BookOpen className='h-5 w-5' />
               </a>
+              <button
+                onClick={handleSheetsClick}
+                className='text-green-600 hover:text-green-800 transition-colors'
+                title='Tutorial Google Sheets'
+              >
+                <SiGooglesheets className='h-5 w-5' />
+              </button>
               <button
                 onClick={handleInfoClick}
                 className='text-gray-500 hover:text-gray-700 transition-colors'
@@ -185,6 +211,61 @@ export default function App() {
         isOpen={isInfoModalOpen}
         onClose={() => setIsInfoModalOpen(false)}
       />
+
+      {showSheetsModal && (
+        <div
+          className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40'
+          ref={sheetsModalRef}
+          onClick={handleSheetsModalBackdrop}
+        >
+          <div
+            className='bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 relative'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className='absolute top-2 right-2 text-gray-400 hover:text-gray-700'
+              onClick={handleSheetsModalClose}
+              aria-label='Tutup'
+            >
+              ×
+            </button>
+            <h2 className='text-xl font-bold mb-3 flex items-center'>
+              <SiGooglesheets className='h-6 w-6 mr-2 text-green-600' />
+              Integrasi Google Sheets
+            </h2>
+            <p className='mb-2 text-gray-700'>
+              Gunakan fungsi berikut di Google Sheets untuk mendapatkan nama
+              mahasiswa ITB berdasarkan NIM, langsung dari layanan ini.
+            </p>
+            <div className='bg-gray-100 rounded p-3 font-mono text-sm mb-2 overflow-x-auto relative'>
+              <pre>
+                {`function itbStudent(nim) {
+  const url = "https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_itb/" + encodeURIComponent(nim);
+  const response = UrlFetchApp.fetch(url, { 'method': 'get' });
+  const data = JSON.parse(response.getContentText());
+  return data.name || "-";
+}`}
+              </pre>
+            </div>
+            <ol className='list-decimal pl-5 text-gray-700 mb-2'>
+              <li>
+                Buka Google Sheets, klik <b>Extensions</b> &gt;{' '}
+                <b>Apps Script</b>.
+              </li>
+              <li>Paste kode di atas ke editor.</li>
+              <li>
+                Simpan, lalu gunakan fungsi <code>=itbStudent("NIM")</code> di
+                sel mana pun.
+              </li>
+            </ol>
+            <p className='text-xs text-gray-500'>
+              Contoh: <br />
+              <code>=itbStudent("12345678")</code> atau <br />
+              <code>=itbStudent(A2)</code>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
