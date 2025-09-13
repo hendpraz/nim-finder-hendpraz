@@ -1,24 +1,14 @@
 'use client';
 
 import { Database, GraduationCap, Users } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
 
-  const router = useRouter();
-
   const currentPage = pathname === '/' ? 'student-finder' : 'pddikti-search';
-
-  const onPageChange = (page: 'student-finder' | 'pddikti-search') => {
-    if (page === 'student-finder') {
-      router.push('/');
-    } else {
-      router.push('/pddikti');
-    }
-  };
 
   return (
     <nav className='bg-white shadow-sm border-b border-gray-200'>
@@ -30,8 +20,8 @@ export default function Navbar() {
           </div>
 
           <div className='flex space-x-1'>
-            <button
-              onClick={() => onPageChange('student-finder')}
+            <Link
+              href='/'
               className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentPage === 'student-finder'
                   ? 'bg-blue-100 text-blue-700'
@@ -40,10 +30,10 @@ export default function Navbar() {
             >
               <Users className='h-4 w-4 mr-2' />
               Smart Search
-            </button>
+            </Link>
 
-            <button
-              onClick={() => onPageChange('pddikti-search')}
+            <Link
+              href='/pddikti'
               className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentPage === 'pddikti-search'
                   ? 'bg-blue-100 text-blue-700'
@@ -52,7 +42,7 @@ export default function Navbar() {
             >
               <Database className='h-4 w-4 mr-2' />
               PDDIKTI Search
-            </button>
+            </Link>
           </div>
         </div>
       </div>
