@@ -102,7 +102,7 @@ export default function App() {
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='max-w-5xl mx-auto sm:py-6 sm:px-6 lg:px-8'>
-        <div className='px-4 py-2 sm:px-0 mb-14'>
+        <div className='px-4 py-2 sm:px-0'>
           <div className='relative flex flex-col items-center justify-center mb-4 sm:mb-8 text-center pt-6 sm:pt-0'>
             <div className='absolute right-2 top-2 sm:right-0 sm:top-0 flex space-x-2'>
               <a
