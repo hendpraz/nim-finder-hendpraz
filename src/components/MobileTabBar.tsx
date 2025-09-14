@@ -25,7 +25,7 @@ export default function MobileTabBar() {
       <Link
         href='/pddikti'
         prefetch={true}
-        className={`flex flex-col items-center justify-center px-4 py-2 text-xs font-medium transition-colors ${
+        className={`flex flex-col items-center justify-center px-4 py-2 text-xs font-medium transition-colors relative ${
           currentPage === 'pddikti-search'
             ? 'text-blue-700'
             : 'text-gray-600 hover:text-gray-900'
@@ -33,6 +33,12 @@ export default function MobileTabBar() {
       >
         {/* <Database className="h-6 w-6 mb-1" /> */}
         PDDIKTI Search
+        <span
+          className='absolute -top-2 -right-3 bg-pink-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-tr-lg rounded-bl-lg shadow-lg rotate-12 select-none'
+          style={{ zIndex: 2 }}
+        >
+          Try it
+        </span>
       </Link>
     </nav>
   );
