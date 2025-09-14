@@ -22,6 +22,7 @@ export default function Navbar() {
           <div className='flex space-x-1'>
             <Link
               href='/'
+              prefetch={true}
               className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentPage === 'student-finder'
                   ? 'bg-blue-100 text-blue-700'
@@ -34,6 +35,7 @@ export default function Navbar() {
 
             <Link
               href='/pddikti'
+              prefetch={true}
               className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentPage === 'pddikti-search'
                   ? 'bg-blue-100 text-blue-700'
