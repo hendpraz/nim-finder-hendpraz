@@ -6,6 +6,7 @@ import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
+import MobileTabBar from '@/components/MobileTabBar';
 import Navbar from '@/components/Navbar';
 
 import { siteConfig } from '@/constant/config';
@@ -75,7 +76,9 @@ export default function RootLayout({
       </head>
       <body>
         <Navbar />
+        <MobileTabBar />
         {children}
+        {/* Mobile Tab Bar */}
       </body>
     </html>
   );

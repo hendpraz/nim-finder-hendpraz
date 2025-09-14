@@ -102,14 +102,14 @@ export default function App() {
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='max-w-5xl mx-auto sm:py-6 sm:px-6 lg:px-8'>
-        <div className='px-4 py-2 sm:px-0'>
-          <div className='relative flex flex-col items-center justify-center mb-8 text-center pt-6 sm:pt-0'>
-            <div className='absolute right-0 top-0 flex space-x-2'>
+        <div className='px-4 py-2 sm:px-0 mb-14'>
+          <div className='relative flex flex-col items-center justify-center mb-4 sm:mb-8 text-center pt-6 sm:pt-0'>
+            <div className='absolute right-2 top-2 sm:right-0 sm:top-0 flex space-x-2'>
               <a
                 href='https://github.com/hendpraz/nim-finder-hendpraz'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-gray-500 hover:text-gray-700 transition-colors'
+                className='hidden sm:flex text-gray-500 hover:text-gray-700 transition-colors'
                 title='View on GitHub'
                 onClick={handleGithubClick}
               >
@@ -126,7 +126,7 @@ export default function App() {
               </a>
               <button
                 onClick={handleSheetsClick}
-                className='text-green-600 hover:text-green-800 transition-colors'
+                className='hidden sm:flex text-green-600 hover:text-green-800 transition-colors'
                 title='Tutorial Google Sheets'
               >
                 <SiGooglesheets className='h-5 w-5' />
@@ -148,7 +148,7 @@ export default function App() {
               Cari NIM dan nama mahasiswa dari berbagai universitas: ITB, UI,
               dan UNPAD.
             </p>
-            <p className='text-gray-600'>
+            <p className='hidden sm:flex text-gray-600'>
               Dilengkapi dengan fitur pencarian fleksibel seperti "if17" dan
               "Lulus 2020"
             </p>

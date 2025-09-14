@@ -19,7 +19,8 @@ export default function Navbar() {
             <span className='text-xl font-bold text-gray-900'>NIM Finder</span>
           </div>
 
-          <div className='flex space-x-1'>
+          {/* Desktop menu: hidden on mobile */}
+          <div className='hidden sm:flex space-x-1'>
             <Link
               href='/'
               prefetch={true}

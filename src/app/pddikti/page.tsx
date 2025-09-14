@@ -204,6 +204,14 @@ export default function PDDIKTISearchPage() {
     });
   };
 
+  // Responsive placeholder: mobile vs desktop
+  const isMobile =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(max-width: 639px)').matches;
+  const placeholder = isMobile
+    ? 'Nama / PT / NIM / Prodi'
+    : 'Keyword: [Nama] [PT] [NIM] [Prodi]';
+
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='max-w-6xl mx-auto py-6 sm:px-6 lg:px-8'>
@@ -219,7 +227,7 @@ export default function PDDIKTISearchPage() {
               Search directly from PDDIKTI (Pangkalan Data Pendidikan Tinggi)
               database.
             </p>
-            <p className='text-gray-600 max-w-2xl mx-auto'>
+            <p className='hidden sm:flex text-gray-600 max-w-2xl mx-auto'>
               Find students from all universities in Indonesia.
             </p>
           </div>
@@ -255,7 +263,8 @@ export default function PDDIKTISearchPage() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyPress={handleKeyPress}
                     className='block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
-                    placeholder='Keyword: [Nama] [PT] [NIM] [Prodi]'
+                    // placeholder='Keyword: [Nama] [PT] [NIM] [Prodi]'
+                    placeholder={placeholder}
                     // placeholder={`Keyword ${
                     //   searchType === 'mahasiswa'
                     //     ? 'Keyword: [Nama Mhs] [PT] [NIM] [Prodi]'
