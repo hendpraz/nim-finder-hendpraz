@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 interface SearchBarProps {
   query: string;
@@ -6,13 +7,20 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ query, onQueryChange }: SearchBarProps) {
-  // Responsive placeholder: mobile vs desktop
-  const isMobile =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(max-width: 639px)').matches;
-  const placeholder = isMobile
-    ? 'Nama / NIM / Prodi / Status'
-    : 'Keyword: [Nama] [NIM] [Jurusan] [Fakultas] [Status]';
+  const [placeholder, setPlaceholder] = useState(
+    'Keyword: [Nama] [NIM] [Jurusan] [Fakultas] [Status]'
+  );
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.matchMedia('(max-width: 639px)').matches;
+      setPlaceholder(
+        isMobile
+          ? 'Nama / NIM / Prodi / Status'
+          : 'Keyword: [Nama] [NIM] [Jurusan] [Fakultas] [Status]'
+      );
+    }
+  }, []);
 
   return (
     <div className='relative'>

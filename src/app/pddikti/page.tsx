@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 
+import { DiktiSearchBar } from '@/components/DiktiSearchBar';
+
 interface PDDIKTIResult {
   id: string;
   nama: string;
@@ -204,14 +206,6 @@ export default function PDDIKTISearchPage() {
     });
   };
 
-  // Responsive placeholder: mobile vs desktop
-  const isMobile =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(max-width: 639px)').matches;
-  const placeholder = isMobile
-    ? 'Nama / PT / NIM / Prodi'
-    : 'Keyword: [Nama] [PT] [NIM] [Prodi]';
-
   return (
     <div className='min-h-screen bg-gray-100'>
       <div className='max-w-6xl mx-auto py-2 sm:py-6 sm:px-6 lg:px-8'>
@@ -234,47 +228,11 @@ export default function PDDIKTISearchPage() {
 
           <div className='bg-white rounded-lg shadow-sm p-6 mb-6'>
             <div className='space-y-4'>
-              {/* <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Search Type
-                </label>
-                <select
-                  value={searchType}
-                  onChange={(e) => setSearchType(e.target.value as 'mahasiswa' | 'dosen' | 'prodi')}
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="mahasiswa">Students (Mahasiswa)</option>
-                  <option value="dosen">Lecturers (Dosen)</option>
-                  <option value="prodi">Study Programs (Program Studi)</option>
-                </select>
-              </div> */}
-
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Search Query
-                </label>
-                <div className='relative'>
-                  <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
-                    <Search className='h-5 w-5 text-gray-400' />
-                  </div>
-                  <input
-                    type='text'
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className='block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
-                    // placeholder='Keyword: [Nama] [PT] [NIM] [Prodi]'
-                    placeholder={placeholder}
-                    // placeholder={`Keyword ${
-                    //   searchType === 'mahasiswa'
-                    //     ? 'Keyword: [Nama Mhs] [PT] [NIM] [Prodi]'
-                    //     : searchType === 'dosen'
-                    //     ? 'lecturer name'
-                    //     : 'program name'
-                    // }`}
-                  />
-                </div>
-              </div>
+              <DiktiSearchBar
+                searchQuery={searchQuery}
+                handleKeyPress={handleKeyPress}
+                setSearchQuery={setSearchQuery}
+              />
 
               <button
                 onClick={handleSearch}
