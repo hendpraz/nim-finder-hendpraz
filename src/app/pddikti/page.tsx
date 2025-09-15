@@ -208,10 +208,10 @@ export default function PDDIKTISearchPage() {
 
   return (
     <div className='min-h-screen bg-gray-100'>
-      <div className='max-w-6xl mx-auto py-2 sm:py-6 sm:px-6 lg:px-8'>
-        <div className='px-4 py-6 sm:px-0'>
-          <div className='text-center mb-4 sm:mb-8'>
-            <div className='flex items-center justify-center mb-4'>
+      <div className='max-w-5xl mx-auto py-2 sm:py-6 sm:px-6 lg:px-8'>
+        <div className='px-4 py-6 sm:py-2 sm:px-0'>
+          <div className='text-center mb-4 sm:mb-8 sm:pb-1'>
+            <div className='flex items-center justify-center mb-4 sm:mb-2'>
               <Database className='h-8 w-8 text-blue-600 mr-2' />
               <h1 className='text-3xl font-bold text-gray-900'>
                 PDDIKTI Search
@@ -221,7 +221,7 @@ export default function PDDIKTISearchPage() {
               Search directly from PDDIKTI (Pangkalan Data Pendidikan Tinggi)
               database.
             </p>
-            <p className='hidden sm:flex text-gray-600 max-w-2xl mx-auto'>
+            <p className='hidden sm:block text-gray-600 max-w-2xl mx-auto'>
               Find students from all universities in Indonesia.
             </p>
           </div>
