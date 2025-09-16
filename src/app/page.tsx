@@ -154,7 +154,7 @@ export default function App() {
             </p>
           </div>
 
-          <div className='bg-white rounded-lg shadow-sm p-6'>
+          <div className='bg-white rounded-lg shadow-sm p-3 md:p-6'>
             <div className='mb-4 flex items-center space-x-3'>
               <label
                 htmlFor='university'

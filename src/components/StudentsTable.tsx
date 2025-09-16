@@ -150,7 +150,7 @@ export function StudentsTable({
         isSimilar={isSimilar}
         query={searchQuery}
       />
-      <div className='mt-4 overflow-x-auto'>
+      <div className='hidden md:block mt-4 overflow-x-auto'>
         <table className='min-w-full divide-y divide-gray-200'>
           <thead className='bg-gray-50'>
             <tr>
@@ -203,6 +203,88 @@ export function StudentsTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Responsive: Table for desktop, cards for mobile */}
+      <div className='block md:hidden mt-4'>
+        {/* Desktop Table */}
+        <div className='hidden md:block overflow-x-auto'>
+          <table className='min-w-full divide-y divide-gray-200 text-xs'>
+            <thead className='bg-gray-50'>
+              <tr>
+                <th className='px-2 py-2 text-left font-medium text-gray-500 uppercase tracking-wider'>
+                  NIM
+                </th>
+                <th className='px-2 py-2 text-left font-medium text-gray-500 uppercase tracking-wider'>
+                  Name
+                </th>
+                <th className='px-2 py-2 text-left font-medium text-gray-500 uppercase tracking-wider'>
+                  Major
+                </th>
+                {university === 'ui' && (
+                  <th className='px-2 py-2 text-left font-medium text-gray-500 uppercase tracking-wider'>
+                    Jenjang
+                  </th>
+                )}
+                <th className='px-2 py-2 text-left font-medium text-gray-500 uppercase tracking-wider'>
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className='bg-white divide-y divide-gray-200'>
+              {students.map((student) => (
+                <tr key={student.majorId} className='hover:bg-gray-50'>
+                  <td className='px-2 py-2'>
+                    <div className='text-xs font-medium text-gray-900'>
+                      {student.majorId}
+                    </div>
+                    {student.facultyId !== student.majorId && (
+                      <div className='text-[10px] text-gray-500'>
+                        {student.facultyId}
+                      </div>
+                    )}
+                  </td>
+                  <td className='px-2 py-2 text-xs text-gray-500'>
+                    {student.name}
+                  </td>
+                  <td className='px-2 py-2 text-xs text-gray-500'>
+                    {student.major}
+                  </td>
+                  {university === 'ui' && (
+                    <td className='px-2 py-2 text-xs text-gray-500'>
+                      {student.jenjang || '-'}
+                    </td>
+                  )}
+                  {getStudentStatus(student.status)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {/* Mobile Card List */}
+        <div className='md:hidden space-y-3'>
+          {students.map((student) => (
+            <div
+              key={student.majorId}
+              className='bg-white rounded shadow p-3 flex flex-col text-xs'
+            >
+              <div className='flex justify-between'>
+                <div className='font-semibold text-gray-700'>
+                  {student.name}
+                </div>
+                <span className='text-gray-400'>{student.majorId}</span>
+              </div>
+              <div className='text-gray-500'>{student.major}</div>
+              {university === 'ui' && (
+                <div className='text-gray-500'>
+                  Jenjang:{' '}
+                  <span className='font-medium'>{student.jenjang || '-'}</span>
+                </div>
+              )}
+              <div className='mt-1'>{student.status}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
