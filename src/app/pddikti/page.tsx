@@ -211,7 +211,7 @@ export default function PDDIKTISearchPage() {
       <div className='max-w-5xl mx-auto py-2 sm:py-6 sm:px-6 lg:px-8'>
         <div className='px-4 py-6 sm:py-2 sm:px-0'>
           <div className='text-center mb-4 sm:mb-8 sm:pb-1'>
-            <div className='flex items-center justify-center mb-4 sm:mb-2'>
+            <div className='flex items-center justify-center mb-4 sm:mb-4'>
               <Database className='h-8 w-8 text-blue-600 mr-2' />
               <h1 className='text-3xl font-bold text-gray-900'>
                 PDDIKTI Search
