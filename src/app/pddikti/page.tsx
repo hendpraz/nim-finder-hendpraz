@@ -65,7 +65,8 @@ export default function PDDIKTISearchPage() {
 
     try {
       const response = await fetch(
-        `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti?query=${searchQuery}`
+        `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti?query=${searchQuery}`,
+        { signal: AbortSignal.timeout(3000) }
       );
 
       if (!response.ok) {
@@ -97,7 +98,8 @@ export default function PDDIKTISearchPage() {
 
     try {
       const response = await fetch(
-        `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti/detail?id=${id}`
+        `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti/detail?id=${id}`,
+        { signal: AbortSignal.timeout(3000) }
       );
 
       const detailData = await response.json();
@@ -226,7 +228,7 @@ export default function PDDIKTISearchPage() {
             </p>
           </div>
 
-          <div className='bg-white rounded-lg shadow-sm p-6 mb-6'>
+          <div className='bg-white rounded-lg shadow-sm p-3 md:p-6 mb-6'>
             <div className='space-y-4'>
               <DiktiSearchBar
                 searchQuery={searchQuery}
@@ -294,60 +296,88 @@ export default function PDDIKTISearchPage() {
                   term.
                 </div>
               ) : (
-                <div className='w-full overflow-x-auto md:overflow-x-visible'>
-                  <table className='min-w-full w-full divide-y divide-gray-200'>
-                    <thead className='bg-gray-50'>
-                      <tr>
-                        <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
-                          Name
-                        </th>
-                        <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
-                          NIM
-                        </th>
-                        <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
-                          University
-                        </th>
-                        <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
-                          Program
-                        </th>
-                        <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className='bg-white divide-y divide-gray-200'>
-                      {results.map((result, index) => (
-                        <tr
-                          key={result.id || index}
-                          className='hover:bg-gray-50'
-                        >
-                          <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
-                            <div className='text-sm font-medium text-gray-900'>
-                              {result.nama}
-                            </div>
-                          </td>
-                          <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
-                            {result.nim}
-                          </td>
-                          <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
-                            {result.nama_pt}
-                          </td>
-                          <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
-                            {result.nama_prodi}
-                          </td>
-                          <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
-                            <button
-                              onClick={() => handleViewDetail(result.id)}
-                              className='inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-                            >
-                              <Eye className='h-3 w-3 mr-1' />
-                              View Detail
-                            </button>
-                          </td>
+                <div>
+                  <div className='w-full overflow-x-auto hidden md:block'>
+                    <table className='min-w-full w-full divide-y divide-gray-200'>
+                      <thead className='bg-gray-50'>
+                        <tr>
+                          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
+                            Name
+                          </th>
+                          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
+                            NIM
+                          </th>
+                          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
+                            University
+                          </th>
+                          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
+                            Program
+                          </th>
+                          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-normal break-words'>
+                            Action
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className='bg-white divide-y divide-gray-200'>
+                        {results.map((result, index) => (
+                          <tr
+                            key={result.id || index}
+                            className='hover:bg-gray-50'
+                          >
+                            <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
+                              <div className='text-sm font-medium text-gray-900'>
+                                {result.nama}
+                              </div>
+                            </td>
+                            <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
+                              {result.nim}
+                            </td>
+                            <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
+                              {result.nama_pt}
+                            </td>
+                            <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
+                              {result.nama_prodi}
+                            </td>
+                            <td className='px-6 py-4 whitespace-normal break-words text-sm text-gray-500'>
+                              <button
+                                onClick={() => handleViewDetail(result.id)}
+                                className='inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                              >
+                                <Eye className='h-3 w-3 mr-1' />
+                                View Detail
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className='block md:hidden p-4 space-y-3'>
+                    {results.map((result, index) => (
+                      <div
+                        key={result.id || index}
+                        className='bg-white rounded shadow p-3 flex flex-col text-xs'
+                      >
+                        <div className='flex justify-between'>
+                          <div className='font-semibold text-gray-700'>
+                            {result.nama}
+                          </div>
+                          <span className='text-gray-400'>{result.nim}</span>
+                        </div>
+                        <div className='text-gray-500'>{result.nama_pt}</div>
+                        <div className='text-gray-500'>{result.nama_prodi}</div>
+                        <div className='mt-2'>
+                          <button
+                            onClick={() => handleViewDetail(result.id)}
+                            className='inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                          >
+                            <Eye className='h-3 w-3 mr-1' />
+                            View Detail
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
