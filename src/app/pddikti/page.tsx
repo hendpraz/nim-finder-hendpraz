@@ -41,6 +41,7 @@ interface PDDIKTIDetail {
 
 export default function PDDIKTISearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [previousSearchQuery, setPreviousSearchQuery] = useState('');
   // const [searchType, setSearchType] = useState<'mahasiswa' | 'dosen' | 'prodi'>(
   //   'mahasiswa'
   // );
@@ -75,6 +76,7 @@ export default function PDDIKTISearchPage() {
 
       const data = await response.json();
       setResults(data || []);
+      setPreviousSearchQuery(searchQuery);
 
       if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
         window.gtag('event', 'search', {
@@ -85,6 +87,7 @@ export default function PDDIKTISearchPage() {
       }
     } catch (err) {
       setError('Failed to search PDDIKTI database. Please try again.');
+      setPreviousSearchQuery(searchQuery);
       // console.error('PDDIKTI search error:', err);
       setResults([]);
     } finally {
@@ -292,8 +295,8 @@ export default function PDDIKTISearchPage() {
 
               {results.length === 0 ? (
                 <div className='text-center py-8 text-gray-500'>
-                  No results found for "{searchQuery}". Try a different search
-                  term.
+                  No results found for "{previousSearchQuery}". Try a different
+                  search term.
                 </div>
               ) : (
                 <div>
