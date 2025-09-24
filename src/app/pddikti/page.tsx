@@ -64,31 +64,59 @@ export default function PDDIKTISearchPage() {
     setError(null);
     setHasSearched(true);
 
+    const maxRetries = 3;
+    let attempt = 0;
+
     try {
-      const response = await fetch(
-        `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti?query=${searchQuery}`,
-        { signal: AbortSignal.timeout(3000) }
-      );
+      while (attempt < maxRetries) {
+        try {
+          const response = await fetch(
+            `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti?query=${searchQuery}`,
+            { signal: AbortSignal.timeout(3000) }
+          );
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch data from PDDIKTI');
-      }
+          if (!response.ok) {
+            throw new Error(
+              `Failed to fetch data from PDDIKTI (status ${response.status})`
+            );
+          }
 
-      const data = await response.json();
-      setResults(data || []);
-      setPreviousSearchQuery(searchQuery);
+          const data = await response.json();
+          setResults(data || []);
+          setPreviousSearchQuery(searchQuery);
 
-      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-        window.gtag('event', 'search', {
-          event_category: 'interaction',
-          event_label: 'pddikti_mhs_search',
-          value: searchQuery,
-        });
+          if (
+            typeof window !== 'undefined' &&
+            typeof window.gtag === 'function'
+          ) {
+            window.gtag('event', 'search', {
+              event_category: 'interaction',
+              event_label: 'pddikti_mhs_search',
+              value: searchQuery,
+            });
+          }
+
+          // Success, exit the function
+          return;
+        } catch (err) {
+          attempt += 1;
+
+          if (attempt < maxRetries) {
+            // Exponential backoff: 500ms, 1000ms
+            const backoffMs = 500 * Math.pow(2, attempt - 1);
+            await new Promise((resolve) => setTimeout(resolve, backoffMs));
+            continue;
+          }
+
+          // If we've exhausted retries, rethrow to be handled by outer catch
+          throw err;
+        }
       }
     } catch (err) {
-      setError('Failed to search PDDIKTI database. Please try again.');
+      setError(
+        'Failed to search PDDIKTI database after multiple attempts. Please try again.'
+      );
       setPreviousSearchQuery(searchQuery);
-      // console.error('PDDIKTI search error:', err);
       setResults([]);
     } finally {
       setIsLoading(false);
@@ -99,51 +127,78 @@ export default function PDDIKTISearchPage() {
     setIsDetailLoading(true);
     setDetailError(null);
 
+    const maxRetries = 3;
+    let attempt = 0;
+
     try {
-      const response = await fetch(
-        `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti/detail?id=${id}`,
-        { signal: AbortSignal.timeout(3000) }
-      );
-
-      const detailData = await response.json();
-
-      if (!response.ok || detailData.success === false) {
-        if (detailData.errorSource === 'PDDIKTI_API') {
-          setDetailError(
-            'Failed to load detail information. Please try again. Possible cause: PDDIKTI API is under maintenance or down.'
+      while (attempt < maxRetries) {
+        try {
+          const response = await fetch(
+            `https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com/mahasiswa_pddikti/detail?id=${id}`,
+            { signal: AbortSignal.timeout(3000) }
           );
-        } else {
-          setDetailError(
-            'Failed to load detail information. Please try again. Possible cause: Network error contacting PDDIKTI API.'
-          );
+
+          const detailData = await response.json();
+
+          if (!response.ok || detailData.success === false) {
+            // If API explicitly reports PDDIKTI is down/maintenance, don't retry
+            if (detailData?.errorSource === 'PDDIKTI_API') {
+              setDetailError(
+                'Failed to load detail information. Please try again. Possible cause: PDDIKTI API is under maintenance or down.'
+              );
+
+              if (
+                typeof window !== 'undefined' &&
+                typeof window.gtag === 'function'
+              ) {
+                window.gtag('event', 'view_detail', {
+                  event_category: 'interaction',
+                  event_label: 'pddikti_mhs_detail',
+                  value: id,
+                  error: detailData.error,
+                  errorSource: detailData.errorSource,
+                  message: detailData.message,
+                });
+              }
+
+              return;
+            }
+
+            // Non-OK or other error sources: throw to trigger retry
+            throw new Error(
+              `Failed to fetch detail from PDDIKTI${
+                !response.ok ? ` (status ${response.status})` : ''
+              }`
+            );
+          }
+
+          if (
+            typeof window !== 'undefined' &&
+            typeof window.gtag === 'function'
+          ) {
+            window.gtag('event', 'view_detail', {
+              event_category: 'interaction',
+              event_label: 'pddikti_mhs_detail',
+              value: id,
+            });
+          }
+
+          setSelectedDetail(detailData);
+          return;
+        } catch (err) {
+          attempt += 1;
+
+          if (attempt < maxRetries) {
+            // Exponential backoff: 500ms, 1000ms
+            const backoffMs = 500 * Math.pow(2, attempt - 1);
+            await new Promise((resolve) => setTimeout(resolve, backoffMs));
+            continue;
+          }
+
+          // Exhausted retries, rethrow to outer catch
+          throw err;
         }
-
-        if (
-          typeof window !== 'undefined' &&
-          typeof window.gtag === 'function'
-        ) {
-          window.gtag('event', 'view_detail', {
-            event_category: 'interaction',
-            event_label: 'pddikti_mhs_detail',
-            value: id,
-            error: detailData.error,
-            errorSource: detailData.errorSource,
-            message: detailData.message,
-          });
-        }
-
-        return;
       }
-
-      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-        window.gtag('event', 'view_detail', {
-          event_category: 'interaction',
-          event_label: 'pddikti_mhs_detail',
-          value: id,
-        });
-      }
-
-      setSelectedDetail(detailData);
     } catch (err) {
       if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
         window.gtag('event', 'view_detail', {
@@ -158,7 +213,7 @@ export default function PDDIKTISearchPage() {
       }
 
       setDetailError(
-        'Failed to load detail information. Please try again. Possible cause: PDDIKTI API is under maintenance or down.'
+        'Failed to load detail information. Please try again. Possible cause: Network error contacting PDDIKTI API.'
       );
       // console.error('Detail fetch error:', err);
     } finally {
