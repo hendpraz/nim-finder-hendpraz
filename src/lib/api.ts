@@ -8,6 +8,8 @@ const UI_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UNPAD_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
+const GUNDAR_BASE_URL =
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 
 const EVENT_TRACKING_URL =
   'https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com';
@@ -15,7 +17,7 @@ const EVENT_TRACKING_URL =
 export async function fetchStudents(
   query: string,
   page: number,
-  university: 'itb' | 'ui' | 'unpad' = 'itb'
+  university: 'itb' | 'ui' | 'unpad' | 'gundar' = 'itb'
 ): Promise<PaginatedStudents> {
   try {
     let url = '';
@@ -29,6 +31,10 @@ export async function fetchStudents(
       )}&page=${page}`;
     } else if (university === 'unpad') {
       url = `${UNPAD_BASE_URL}/mahasiswa_unpad?query=${encodeURIComponent(
+        query
+      )}&page=${page}`;
+    } else if (university === 'gundar') {
+      url = `${GUNDAR_BASE_URL}/mahasiswa_gundar?query=${encodeURIComponent(
         query
       )}&page=${page}`;
     }

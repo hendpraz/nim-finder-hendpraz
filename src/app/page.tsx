@@ -32,7 +32,9 @@ function trackDropdownChange(dropdownId: string, value: string): void {
 
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const [university, setUniversity] = useState<'itb' | 'ui' | 'unpad'>('itb');
+  const [university, setUniversity] = useState<
+    'itb' | 'ui' | 'unpad' | 'gundar'
+  >('itb');
   // const [university, setUniversity] = useState<'itb' | 'ui' | 'unpad'>(() => {
   //   const params = new URLSearchParams(window.location.search);
   //   const uni = params.get('university');
@@ -146,7 +148,7 @@ export default function App() {
             </div>
             <p className='text-gray-600'>
               Cari NIM dan nama mahasiswa dari berbagai universitas: ITB, UI,
-              dan UNPAD.
+              UNPAD, dan GUNDAR.
             </p>
             <p className='hidden sm:flex text-gray-600'>
               Dilengkapi dengan fitur pencarian fleksibel seperti "if17" dan
@@ -166,7 +168,11 @@ export default function App() {
                 id='university'
                 value={university}
                 onChange={(e) => {
-                  const val = e.target.value as 'itb' | 'ui';
+                  const val = e.target.value as
+                    | 'itb'
+                    | 'ui'
+                    | 'unpad'
+                    | 'gundar';
                   setUniversity(val);
                   trackDropdownChange('university', val);
                 }}
@@ -175,6 +181,7 @@ export default function App() {
                 <option value='itb'>Institut Teknologi Bandung</option>
                 <option value='ui'>Universitas Indonesia</option>
                 <option value='unpad'>Universitas Padjadjaran</option>
+                <option value='gundar'>Universitas Gunadarma</option>
               </select>
             </div>
             <SearchBar query={searchQuery} onQueryChange={handleSearch} />

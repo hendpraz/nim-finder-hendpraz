@@ -31,6 +31,15 @@ const UNPAD_SEARCH_SUGGESTIONS = [
   'Lulus 2024 Ganjil',
 ];
 
+const GUNDAR_SEARCH_SUGGESTIONS = [
+  'Sistem Informasi Lulus 2024',
+  'Ilmu Komunikasi Lulus 2024',
+  'Manajemen Lulus 2024',
+  'Psikologi Aktif',
+  'Akuntansi Lulus 2024',
+  'Lulus 2024 Ganjil',
+];
+
 const TYPING_SPEED = 100; // ms per character
 const PAUSE_DURATION = 1000; // ms to pause at full text
 
@@ -41,7 +50,7 @@ interface StudentsTableProps {
   total: number;
   isSimilar: boolean;
   searchQuery: string;
-  university: 'itb' | 'ui' | 'unpad';
+  university: 'itb' | 'ui' | 'unpad' | 'gundar';
 }
 
 export function StudentsTable({
@@ -64,6 +73,8 @@ export function StudentsTable({
       currentSuggestion = UI_SEARCH_SUGGESTIONS[currentSuggestionIndex];
     } else if (university === 'unpad') {
       currentSuggestion = UNPAD_SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    } else if (university === 'gundar') {
+      currentSuggestion = GUNDAR_SEARCH_SUGGESTIONS[currentSuggestionIndex];
     }
     let timeoutId: NodeJS.Timeout;
 

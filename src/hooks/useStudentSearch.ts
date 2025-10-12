@@ -6,7 +6,7 @@ import { Student } from '@/types/student';
 
 const MIN_SEARCH_LENGTH = 3;
 
-type University = 'itb' | 'ui' | 'unpad';
+type University = 'itb' | 'ui' | 'unpad' | 'gundar';
 
 export function useStudentSearch(university: University = 'itb') {
   const [searchQuery, setSearchQuery] = useState('');
