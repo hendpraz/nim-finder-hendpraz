@@ -10,6 +10,8 @@ const UNPAD_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const GUNDAR_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
+const UGM_BASE_URL =
+  'https://rst47qajzugyei6ax72zkqjz6e0gpyyn.lambda-url.ap-southeast-1.on.aws';
 
 const EVENT_TRACKING_URL =
   'https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com';
@@ -17,7 +19,7 @@ const EVENT_TRACKING_URL =
 export async function fetchStudents(
   query: string,
   page: number,
-  university: 'itb' | 'ui' | 'unpad' | 'gundar' = 'itb'
+  university: 'itb' | 'ui' | 'unpad' | 'gundar' | 'ugm' = 'itb'
 ): Promise<PaginatedStudents> {
   try {
     let url = '';
@@ -37,6 +39,8 @@ export async function fetchStudents(
       url = `${GUNDAR_BASE_URL}/mahasiswa_gundar?query=${encodeURIComponent(
         query
       )}&page=${page}`;
+    } else if (university === 'ugm') {
+      url = `${UGM_BASE_URL}/?query=${encodeURIComponent(query)}&page=${page}`;
     }
     const response = await fetch(url);
 

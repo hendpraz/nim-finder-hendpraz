@@ -33,7 +33,7 @@ function trackDropdownChange(dropdownId: string, value: string): void {
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [university, setUniversity] = useState<
-    'itb' | 'ui' | 'unpad' | 'gundar'
+    'itb' | 'ui' | 'unpad' | 'gundar' | 'ugm'
   >('itb');
   // const [university, setUniversity] = useState<'itb' | 'ui' | 'unpad'>(() => {
   //   const params = new URLSearchParams(window.location.search);
@@ -182,6 +182,7 @@ export default function App() {
                 <option value='ui'>Universitas Indonesia</option>
                 <option value='unpad'>Universitas Padjadjaran</option>
                 <option value='gundar'>Universitas Gunadarma</option>
+                <option value='ugm'>Universitas Gadjah Mada</option>
               </select>
             </div>
             <SearchBar query={searchQuery} onQueryChange={handleSearch} />
