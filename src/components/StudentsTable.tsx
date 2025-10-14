@@ -50,7 +50,15 @@ interface StudentsTableProps {
   total: number;
   isSimilar: boolean;
   searchQuery: string;
-  university: 'itb' | 'ui' | 'unpad' | 'gundar' | 'ugm';
+  university:
+    | 'itb'
+    | 'ui'
+    | 'unpad'
+    | 'gundar'
+    | 'ugm'
+    | 'unbraw'
+    | 'undip'
+    | 'binus';
 }
 
 export function StudentsTable({
