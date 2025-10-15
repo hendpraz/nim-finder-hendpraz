@@ -11,13 +11,13 @@ const UNPAD_BASE_URL =
 const GUNDAR_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UGM_BASE_URL =
-  'https://rst47qajzugyei6ax72zkqjz6e0gpyyn.lambda-url.ap-southeast-1.on.aws';
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UNBRAW_BASE_URL =
-  'https://rst47qajzugyei6ax72zkqjz6e0gpyyn.lambda-url.ap-southeast-1.on.aws';
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const UNDIP_BASE_URL =
-  'https://rst47qajzugyei6ax72zkqjz6e0gpyyn.lambda-url.ap-southeast-1.on.aws';
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const BINUS_BASE_URL =
-  'https://rst47qajzugyei6ax72zkqjz6e0gpyyn.lambda-url.ap-southeast-1.on.aws';
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 
 const EVENT_TRACKING_URL =
   'https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com';
@@ -54,17 +54,19 @@ export async function fetchStudents(
         query
       )}&page=${page}`;
     } else if (university === 'ugm') {
-      url = `${UGM_BASE_URL}/?query=${encodeURIComponent(query)}&page=${page}`;
+      url = `${UGM_BASE_URL}/mahasiswa_ugm?query=${encodeURIComponent(
+        query
+      )}&page=${page}`;
     } else if (university === 'unbraw') {
-      url = `${UNBRAW_BASE_URL}/?query=${encodeURIComponent(
+      url = `${UNBRAW_BASE_URL}/mahasiswa_unbraw?query=${encodeURIComponent(
         query
       )}&page=${page}&university=Universitas Brawijaya`;
     } else if (university === 'undip') {
-      url = `${UNDIP_BASE_URL}/?query=${encodeURIComponent(
+      url = `${UNDIP_BASE_URL}/mahasiswa_undip?query=${encodeURIComponent(
         query
       )}&page=${page}&university=Universitas Diponegoro`;
     } else if (university === 'binus') {
-      url = `${BINUS_BASE_URL}/?query=${encodeURIComponent(
+      url = `${BINUS_BASE_URL}/mahasiswa_binus?query=${encodeURIComponent(
         query
       )}&page=${page}&university=Universitas Bina Nusantara`;
     }
