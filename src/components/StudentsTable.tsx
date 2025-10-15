@@ -40,6 +40,15 @@ const GUNDAR_SEARCH_SUGGESTIONS = [
   'Lulus 2024 Ganjil',
 ];
 
+const GENERAL_SEARCH_SUGGESTIONS = [
+  'Aktif',
+  'Lulus',
+  'Hendry',
+  'Informatika',
+  '2024',
+  '2025',
+];
+
 const TYPING_SPEED = 100; // ms per character
 const PAUSE_DURATION = 1000; // ms to pause at full text
 
@@ -83,6 +92,8 @@ export function StudentsTable({
       currentSuggestion = UNPAD_SEARCH_SUGGESTIONS[currentSuggestionIndex];
     } else if (university === 'gundar') {
       currentSuggestion = GUNDAR_SEARCH_SUGGESTIONS[currentSuggestionIndex];
+    } else {
+      currentSuggestion = GENERAL_SEARCH_SUGGESTIONS[currentSuggestionIndex];
     }
     let timeoutId: NodeJS.Timeout;
 
