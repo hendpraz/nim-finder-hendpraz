@@ -18,6 +18,8 @@ const UNDIP_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 const BINUS_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
+const IPB_BASE_URL =
+  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 
 const EVENT_TRACKING_URL =
   'https://73drglpjge.execute-api.ap-southeast-1.amazonaws.com';
@@ -33,7 +35,8 @@ export async function fetchStudents(
     | 'ugm'
     | 'unbraw'
     | 'undip'
-    | 'binus' = 'itb'
+    | 'binus'
+    | 'ipb' = 'itb'
 ): Promise<PaginatedStudents> {
   try {
     let url = '';
@@ -60,15 +63,19 @@ export async function fetchStudents(
     } else if (university === 'unbraw') {
       url = `${UNBRAW_BASE_URL}/mahasiswa_unbraw?query=${encodeURIComponent(
         query
-      )}&page=${page}&university=Universitas Brawijaya`;
+      )}&page=${page}`;
     } else if (university === 'undip') {
       url = `${UNDIP_BASE_URL}/mahasiswa_undip?query=${encodeURIComponent(
         query
-      )}&page=${page}&university=Universitas Diponegoro`;
+      )}&page=${page}`;
     } else if (university === 'binus') {
       url = `${BINUS_BASE_URL}/mahasiswa_binus?query=${encodeURIComponent(
         query
-      )}&page=${page}&university=Universitas Bina Nusantara`;
+      )}&page=${page}`;
+    } else if (university === 'ipb') {
+      url = `${IPB_BASE_URL}/mahasiswa_ipb?query=${encodeURIComponent(
+        query
+      )}&page=${page}`;
     }
     const response = await fetch(url);
 

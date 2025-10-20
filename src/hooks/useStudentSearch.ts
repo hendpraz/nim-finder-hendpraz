@@ -14,7 +14,8 @@ type University =
   | 'ugm'
   | 'unbraw'
   | 'undip'
-  | 'binus';
+  | 'binus'
+  | 'ipb';
 
 export function useStudentSearch(university: University = 'itb') {
   const [searchQuery, setSearchQuery] = useState('');

@@ -67,7 +67,8 @@ interface StudentsTableProps {
     | 'ugm'
     | 'unbraw'
     | 'undip'
-    | 'binus';
+    | 'binus'
+    | 'ipb';
 }
 
 export function StudentsTable({
