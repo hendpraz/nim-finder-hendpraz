@@ -174,24 +174,24 @@ export default function App() {
                 }}
                 className='border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
               >
-                <option value='itb'>Institut Teknologi Bandung</option>
-                <option value='ui'>Universitas Indonesia</option>
-                <option value='unpad'>Universitas Padjadjaran</option>
-                <option value='ugm'>Universitas Gadjah Mada</option>
-                <option value='binus'>Universitas Bina Nusantara</option>
-                <option value='unbraw'>Universitas Brawijaya</option>
-                <option value='undip'>Universitas Diponegoro</option>
-                <option value='ipb'>Institut Pertanian Bogor</option>
-                <option value='gundar'>Universitas Gunadarma</option>
-                <option value='trisakti'>Universitas Trisakti</option>
-                <option value='unair'>Universitas Airlangga</option>
-                <option value='its'>Institut Teknologi Sepuluh Nopember</option>
-                <option value='uii'>Universitas Islam Indonesia</option>
-                <option value='uns'>Universitas Sebelas Maret</option>
-                <option value='upi'>Universitas Pendidikan Indonesia</option>
-                <option value='unnes'>Universitas Negeri Semarang</option>
+                <option value='itb'>ITB</option>
+                <option value='ui'>UI</option>
+                <option value='unpad'>UNPAD</option>
+                <option value='ugm'>UGM</option>
+                <option value='binus'>BINUS</option>
+                <option value='unbraw'>UNBRAW</option>
+                <option value='undip'>UNDIP</option>
+                <option value='ipb'>IPB</option>
+                <option value='gundar'>Gunadarma</option>
+                <option value='trisakti'>Trisakti</option>
+                <option value='unair'>UNAIR</option>
+                <option value='its'>ITS</option>
+                <option value='uii'>UII</option>
+                <option value='uns'>UNS Sebelas Maret</option>
+                <option value='upi'>UPI</option>
+                <option value='unnes'>UNNES Semarang</option>
                 <option value='unand'>Universitas Andalas</option>
-                <option value='unila'>Universitas Lampung</option>
+                <option value='unila'>UNILA Lampung</option>
                 <option value='unhas'>Universitas Hasanuddin</option>
               </select>
             </div>
