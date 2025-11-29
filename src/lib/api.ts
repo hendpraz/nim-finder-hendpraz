@@ -2,23 +2,9 @@ import { transformApiResponse } from './transformers';
 import type { ApiResponse } from '../types/api';
 import type { PaginatedStudents } from '../types/student';
 
-const ITB_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const UI_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const UNPAD_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const GUNDAR_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const UGM_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const UNBRAW_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const UNDIP_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const BINUS_BASE_URL =
-  'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
-const IPB_BASE_URL =
+import { University } from '@/types/university';
+
+const GENERAL_BASE_URL =
   'https://xg1kctvm70.execute-api.ap-southeast-1.amazonaws.com';
 
 const EVENT_TRACKING_URL =
@@ -27,56 +13,13 @@ const EVENT_TRACKING_URL =
 export async function fetchStudents(
   query: string,
   page: number,
-  university:
-    | 'itb'
-    | 'ui'
-    | 'unpad'
-    | 'gundar'
-    | 'ugm'
-    | 'unbraw'
-    | 'undip'
-    | 'binus'
-    | 'ipb' = 'itb'
+  university: University = 'itb'
 ): Promise<PaginatedStudents> {
   try {
-    let url = '';
-    if (university === 'itb') {
-      url = `${ITB_BASE_URL}/mahasiswa_itb?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'ui') {
-      url = `${UI_BASE_URL}/mahasiswa_ui?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'unpad') {
-      url = `${UNPAD_BASE_URL}/mahasiswa_unpad?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'gundar') {
-      url = `${GUNDAR_BASE_URL}/mahasiswa_gundar?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'ugm') {
-      url = `${UGM_BASE_URL}/mahasiswa_ugm?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'unbraw') {
-      url = `${UNBRAW_BASE_URL}/mahasiswa_unbraw?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'undip') {
-      url = `${UNDIP_BASE_URL}/mahasiswa_undip?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'binus') {
-      url = `${BINUS_BASE_URL}/mahasiswa_binus?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    } else if (university === 'ipb') {
-      url = `${IPB_BASE_URL}/mahasiswa_ipb?query=${encodeURIComponent(
-        query
-      )}&page=${page}`;
-    }
+    const url = `${GENERAL_BASE_URL}/mahasiswa_${university}?query=${encodeURIComponent(
+      query
+    )}&page=${page}`;
+
     const response = await fetch(url);
 
     if (!response.ok) {

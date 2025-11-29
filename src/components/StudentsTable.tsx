@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { SearchResultsInfo } from './SearchResultsInfo';
 
 import { Student } from '@/types/student';
+import { University } from '@/types/university';
 
 const ITB_SEARCH_SUGGESTIONS = [
   'Hendry if',
@@ -59,16 +60,7 @@ interface StudentsTableProps {
   total: number;
   isSimilar: boolean;
   searchQuery: string;
-  university:
-    | 'itb'
-    | 'ui'
-    | 'unpad'
-    | 'gundar'
-    | 'ugm'
-    | 'unbraw'
-    | 'undip'
-    | 'binus'
-    | 'ipb';
+  university: University;
 }
 
 export function StudentsTable({

@@ -12,6 +12,8 @@ import { LoadMoreButton } from '@/components/LoadMoreButton';
 import { SearchBar } from '@/components/SearchBar';
 import { StudentsTable } from '@/components/StudentsTable';
 
+import { University } from '@/types/university';
+
 // Add gtag type for Google Analytics
 declare global {
   interface Window {
@@ -32,17 +34,7 @@ function trackDropdownChange(dropdownId: string, value: string): void {
 
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const [university, setUniversity] = useState<
-    | 'itb'
-    | 'ui'
-    | 'unpad'
-    | 'gundar'
-    | 'ugm'
-    | 'unbraw'
-    | 'undip'
-    | 'binus'
-    | 'ipb'
-  >('itb');
+  const [university, setUniversity] = useState<University>('itb');
   // const [university, setUniversity] = useState<'itb' | 'ui' | 'unpad'>(() => {
   //   const params = new URLSearchParams(window.location.search);
   //   const uni = params.get('university');
@@ -156,7 +148,7 @@ export default function App() {
             </div>
             <p className='text-gray-600'>
               Cari NIM dan nama mahasiswa dari berbagai universitas: ITB, UI,
-              UNPAD, UGM, UNBRAW, UNDIP, BINUS, IPB dan GUNDAR.
+              UNPAD, UGM, BINUS, UNBRAW, UNDIP, ITS, IPB dll.
             </p>
             <p className='hidden sm:flex text-gray-600'>
               Dilengkapi dengan fitur pencarian fleksibel seperti "if17" dan
@@ -176,16 +168,7 @@ export default function App() {
                 id='university'
                 value={university}
                 onChange={(e) => {
-                  const val = e.target.value as
-                    | 'itb'
-                    | 'ui'
-                    | 'unpad'
-                    | 'gundar'
-                    | 'ugm'
-                    | 'unbraw'
-                    | 'undip'
-                    | 'binus'
-                    | 'ipb';
+                  const val = e.target.value as University;
                   setUniversity(val);
                   trackDropdownChange('university', val);
                 }}
@@ -194,12 +177,22 @@ export default function App() {
                 <option value='itb'>Institut Teknologi Bandung</option>
                 <option value='ui'>Universitas Indonesia</option>
                 <option value='unpad'>Universitas Padjadjaran</option>
-                <option value='gundar'>Universitas Gunadarma</option>
                 <option value='ugm'>Universitas Gadjah Mada</option>
+                <option value='binus'>Universitas Bina Nusantara</option>
                 <option value='unbraw'>Universitas Brawijaya</option>
                 <option value='undip'>Universitas Diponegoro</option>
-                <option value='binus'>Universitas Bina Nusantara</option>
                 <option value='ipb'>Institut Pertanian Bogor</option>
+                <option value='gundar'>Universitas Gunadarma</option>
+                <option value='trisakti'>Universitas Trisakti</option>
+                <option value='unair'>Universitas Airlangga</option>
+                <option value='its'>Institut Teknologi Sepuluh Nopember</option>
+                <option value='uii'>Universitas Islam Indonesia</option>
+                <option value='uns'>Universitas Sebelas Maret</option>
+                <option value='upi'>Universitas Pendidikan Indonesia</option>
+                <option value='unnes'>Universitas Negeri Semarang</option>
+                <option value='unand'>Universitas Andalas</option>
+                <option value='unila'>Universitas Lampung</option>
+                <option value='unhas'>Universitas Hasanuddin</option>
               </select>
             </div>
             <SearchBar query={searchQuery} onQueryChange={handleSearch} />

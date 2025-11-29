@@ -3,19 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { fetchStudents } from '@/lib/api';
 
 import { Student } from '@/types/student';
+import { University } from '@/types/university';
 
 const MIN_SEARCH_LENGTH = 3;
-
-type University =
-  | 'itb'
-  | 'ui'
-  | 'unpad'
-  | 'gundar'
-  | 'ugm'
-  | 'unbraw'
-  | 'undip'
-  | 'binus'
-  | 'ipb';
 
 export function useStudentSearch(university: University = 'itb') {
   const [searchQuery, setSearchQuery] = useState('');
