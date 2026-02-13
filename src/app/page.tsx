@@ -1,7 +1,7 @@
 'use client';
 
 import { BookOpen, Github, GraduationCap, Info } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SiGooglesheets } from 'react-icons/si';
 import '@/lib/env';
 
@@ -79,22 +79,22 @@ function trackDropdownChange(dropdownId: string, value: string): void {
   }
 }
 
+const STORAGE_KEY = 'nim-finder-university';
+
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [university, setUniversity] = useState<University>('itb');
-  // const [university, setUniversity] = useState<'itb' | 'ui' | 'unpad'>(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const uni = params.get('university');
-  //   return uni === 'itb' || uni === 'ui' || uni === 'unpad' ? uni : 'itb';
-  // });
-  // Update the URL query param when university changes
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   params.set('university', university);
-  //   const newRelativePathQuery =
-  //     window.location.pathname + '?' + params.toString();
-  //   window.history.replaceState(null, '', newRelativePathQuery);
-  // }, [university]);
+  const [isStorageLoaded, setIsStorageLoaded] = useState(false);
+
+  // Load saved university from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && saved in UNIVERSITY_OPTIONS) {
+      setUniversity(saved as University);
+    }
+    setIsStorageLoaded(true);
+  }, []);
+
   const {
     searchQuery,
     students,
@@ -211,22 +211,27 @@ export default function App() {
               >
                 University:
               </label>
-              <select
-                id='university'
-                value={university}
-                onChange={(e) => {
-                  const val = e.target.value as University;
-                  setUniversity(val);
-                  trackDropdownChange('university', val);
-                }}
-                className='border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
-              >
-                {Object.entries(UNIVERSITY_OPTIONS).map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
+              {isStorageLoaded ? (
+                <select
+                  id='university'
+                  value={university}
+                  onChange={(e) => {
+                    const val = e.target.value as University;
+                    setUniversity(val);
+                    localStorage.setItem(STORAGE_KEY, val);
+                    trackDropdownChange('university', val);
+                  }}
+                  className='border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
+                >
+                  {Object.entries(UNIVERSITY_OPTIONS).map(([value, label]) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className='h-8 w-24 bg-gray-200 rounded-md animate-pulse' />
+              )}
             </div>
             <SearchBar query={searchQuery} onQueryChange={handleSearch} />
 
