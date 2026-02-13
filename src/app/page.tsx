@@ -14,6 +14,53 @@ import { StudentsTable } from '@/components/StudentsTable';
 
 import { University } from '@/types/university';
 
+const UNIVERSITY_OPTIONS: Record<University, string> = {
+  itb: 'ITB',
+  ui: 'UI',
+  unpad: 'UNPAD',
+  ugm: 'UGM',
+  binus: 'BINUS',
+  unbraw: 'UB',
+  undip: 'UNDIP',
+  ipb: 'IPB',
+  gundar: 'Gunadarma',
+  trisakti: 'Trisakti',
+  unair: 'UNAIR',
+  its: 'ITS',
+  uii: 'UII',
+  uns: 'UNS',
+  upi: 'UPI',
+  unnes: 'UNNES',
+  unand: 'UNAND',
+  unila: 'UNILA',
+  unhas: 'UNHAS',
+  universitas_sanata_dharma: 'Univ. Sanata Dharma',
+  universitas_yarsi: 'Univ. Yarsi',
+  universitas_katolik_parahyangan: 'UNPAR',
+  institut_teknologi_sumatera: 'ITERA',
+  universitas_komputer_indonesia: 'UNIKOM',
+  universitas_muhammadiyah_surakarta: 'UMS',
+  universitas_katolik_widya_mandala_surabaya: 'UKWMS',
+  institut_teknologi_del_: 'IT Del',
+  universitas_mercu_buana: 'Univ. Mercu Buana',
+  universitas_kristen_maranatha: 'UK Maranatha',
+  universitas_katolik_indonesia_atma_jaya: 'Unika Atma Jaya',
+  universitas_ciputra_surabaya: 'UC Surabaya',
+  universitas_ahmad_dahlan: 'Univ. Ahmad Dahlan',
+  universitas_islam_negeri_syarif_hidayatullah: 'UIN Jakarta',
+  universitas_muhammadiyah_malang: 'UMM',
+  universitas_budi_luhur: 'Univ. Budi Luhur',
+  universitas_tarumanagara: 'UNTAR',
+  universitas_negeri_surabaya: 'UNESA',
+  universitas_pelita_harapan: 'UPH',
+  universitas_kristen_petra: 'UK Petra',
+  universitas_telkom: 'Tel-U',
+  universitas_pamulang: 'UNPAM',
+  institut_teknologi_nasional_bandung: 'ITENAS Bandung',
+  universitas_islam_bandung: 'UNISBA',
+  universitas_atma_jaya_yogyakarta: 'UAJY',
+};
+
 // Add gtag type for Google Analytics
 declare global {
   interface Window {
@@ -174,25 +221,11 @@ export default function App() {
                 }}
                 className='border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
               >
-                <option value='itb'>ITB</option>
-                <option value='ui'>UI</option>
-                <option value='unpad'>UNPAD</option>
-                <option value='ugm'>UGM</option>
-                <option value='binus'>BINUS</option>
-                <option value='unbraw'>UNBRAW</option>
-                <option value='undip'>UNDIP</option>
-                <option value='ipb'>IPB</option>
-                <option value='gundar'>Gunadarma</option>
-                <option value='trisakti'>Trisakti</option>
-                <option value='unair'>UNAIR</option>
-                <option value='its'>ITS</option>
-                <option value='uii'>UII</option>
-                <option value='uns'>UNS Sebelas Maret</option>
-                <option value='upi'>UPI</option>
-                <option value='unnes'>UNNES Semarang</option>
-                <option value='unand'>Universitas Andalas</option>
-                <option value='unila'>UNILA Lampung</option>
-                <option value='unhas'>Universitas Hasanuddin</option>
+                {Object.entries(UNIVERSITY_OPTIONS).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
               </select>
             </div>
             <SearchBar query={searchQuery} onQueryChange={handleSearch} />
