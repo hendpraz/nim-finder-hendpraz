@@ -11,6 +11,7 @@ import { InfoModal } from '@/components/InfoModal';
 import { LoadMoreButton } from '@/components/LoadMoreButton';
 import { SearchBar } from '@/components/SearchBar';
 import { StudentsTable } from '@/components/StudentsTable';
+import { UniversitySelector } from '@/components/UniversitySelector';
 
 import { University } from '@/types/university';
 
@@ -212,23 +213,15 @@ export default function App() {
                 University:
               </label>
               {isStorageLoaded ? (
-                <select
-                  id='university'
-                  value={university}
-                  onChange={(e) => {
-                    const val = e.target.value as University;
+                <UniversitySelector
+                  university={university}
+                  onUniversityChange={(val) => {
                     setUniversity(val);
                     localStorage.setItem(STORAGE_KEY, val);
                     trackDropdownChange('university', val);
                   }}
-                  className='border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
-                >
-                  {Object.entries(UNIVERSITY_OPTIONS).map(([value, label]) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-                </select>
+                  universityOptions={UNIVERSITY_OPTIONS}
+                />
               ) : (
                 <div className='h-8 w-24 bg-gray-200 rounded-md animate-pulse' />
               )}
