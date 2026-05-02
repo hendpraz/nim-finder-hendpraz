@@ -205,6 +205,12 @@ export default function App() {
   const sheetsModalRef = useRef<HTMLDivElement>(null);
 
   function handleSheetsClick() {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'sheets_click', {
+        event_category: 'engagement',
+        event_label: 'Google Sheets Icon Click',
+      });
+    }
     setShowSheetsModal(true);
   }
 
@@ -213,6 +219,15 @@ export default function App() {
   }
 
   const handleShareResults = useCallback(async () => {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'share_click', {
+        event_category: 'engagement',
+        event_label: 'Share Results Click',
+        query: searchQuery.trim(),
+        university: university,
+      });
+    }
+
     const url = new URL(window.location.href);
     url.searchParams.set(QUERY_PARAM, searchQuery.trim());
     url.searchParams.set(UNIVERSITY_PARAM, university);
