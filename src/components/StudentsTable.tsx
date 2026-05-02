@@ -61,6 +61,8 @@ interface StudentsTableProps {
   isSimilar: boolean;
   searchQuery: string;
   university: University;
+  onShareResults?: () => void;
+  isShareCopied?: boolean;
 }
 
 export function StudentsTable({
@@ -70,6 +72,8 @@ export function StudentsTable({
   isSimilar,
   searchQuery,
   university,
+  onShareResults,
+  isShareCopied,
 }: StudentsTableProps) {
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
@@ -172,6 +176,8 @@ export function StudentsTable({
         totalCount={total}
         isSimilar={isSimilar}
         query={searchQuery}
+        onShareResults={onShareResults}
+        isShareCopied={isShareCopied}
       />
       <div className='hidden md:block mt-4 overflow-x-auto'>
         <table className='min-w-full divide-y divide-gray-200'>

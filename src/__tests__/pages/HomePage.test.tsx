@@ -8,7 +8,7 @@ describe('Homepage', () => {
   it('renders the Components', () => {
     render(<HomePage />);
 
-    const heading = screen.getByText(/NIMFinder.com/i);
+    const heading = screen.getByRole('heading', { name: /Smart Search/i });
 
     expect(heading).toBeInTheDocument();
   });

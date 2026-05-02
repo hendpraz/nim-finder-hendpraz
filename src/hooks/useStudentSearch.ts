@@ -75,15 +75,15 @@ export function useStudentSearch(university: University = 'itb') {
     return () => clearTimeout(timeoutId);
   }, [searchQuery, university, loadStudents]);
 
-  const handleSearch = (query: string) => {
+  const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
-  };
+  }, []);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
     loadStudents(nextPage, true);
-  };
+  }, [currentPage, loadStudents]);
 
   return {
     searchQuery,

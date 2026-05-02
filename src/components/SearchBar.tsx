@@ -12,7 +12,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
   );
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.matchMedia) {
       const isMobile = window.matchMedia('(max-width: 639px)').matches;
       setPlaceholder(
         isMobile

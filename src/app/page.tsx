@@ -1,7 +1,7 @@
 'use client';
 
 import { BookOpen, Github, GraduationCap, Info } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SiGooglesheets } from 'react-icons/si';
 import '@/lib/env';
 
@@ -81,20 +81,43 @@ function trackDropdownChange(dropdownId: string, value: string): void {
 }
 
 const STORAGE_KEY = 'nim-finder-university';
+const QUERY_PARAM = 'q';
+const UNIVERSITY_PARAM = 'uni';
+
+function normalizeUniversity(value: string | null): University | null {
+  const normalizedValue = value?.toLowerCase();
+  return normalizedValue && normalizedValue in UNIVERSITY_OPTIONS
+    ? (normalizedValue as University)
+    : null;
+}
+
+async function copyToClipboard(text: string) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.top = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  const didCopy = document.execCommand('copy');
+  document.body.removeChild(textarea);
+
+  if (!didCopy) {
+    throw new Error('Unable to copy share URL');
+  }
+}
 
 export default function App() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [university, setUniversity] = useState<University>('itb');
   const [isStorageLoaded, setIsStorageLoaded] = useState(false);
-
-  // Load saved university from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && saved in UNIVERSITY_OPTIONS) {
-      setUniversity(saved as University);
-    }
-    setIsStorageLoaded(true);
-  }, []);
+  const [isShareCopied, setIsShareCopied] = useState(false);
 
   const {
     searchQuery,
@@ -108,6 +131,53 @@ export default function App() {
     handleSearch,
     handleLoadMore,
   } = useStudentSearch(university);
+
+  // URL params win over localStorage so shared links always reproduce the query.
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryParam = searchParams.get(QUERY_PARAM)?.trim() ?? '';
+    const universityParam = normalizeUniversity(
+      searchParams.get(UNIVERSITY_PARAM)
+    );
+
+    if (universityParam) {
+      setUniversity(universityParam);
+      localStorage.setItem(STORAGE_KEY, universityParam);
+    } else {
+      const saved = normalizeUniversity(localStorage.getItem(STORAGE_KEY));
+      if (saved) {
+        setUniversity(saved);
+      }
+    }
+
+    if (queryParam) {
+      handleSearch(queryParam);
+    }
+
+    setIsStorageLoaded(true);
+  }, [handleSearch]);
+
+  useEffect(() => {
+    if (!isStorageLoaded) return;
+
+    const url = new URL(window.location.href);
+    const trimmedQuery = searchQuery.trim();
+
+    if (trimmedQuery) {
+      url.searchParams.set(QUERY_PARAM, trimmedQuery);
+      url.searchParams.set(UNIVERSITY_PARAM, university);
+    } else {
+      url.searchParams.delete(QUERY_PARAM);
+      url.searchParams.delete(UNIVERSITY_PARAM);
+    }
+
+    const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState(null, '', nextUrl);
+  }, [isStorageLoaded, searchQuery, university]);
+
+  useEffect(() => {
+    setIsShareCopied(false);
+  }, [searchQuery, university]);
 
   const showLoadMore =
     students.length > 0 && hasMore && students.length < total;
@@ -141,6 +211,33 @@ export default function App() {
   function handleSheetsModalClose() {
     setShowSheetsModal(false);
   }
+
+  const handleShareResults = useCallback(async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set(QUERY_PARAM, searchQuery.trim());
+    url.searchParams.set(UNIVERSITY_PARAM, university);
+
+    const shareUrl = url.toString();
+
+    if (navigator.share && window.matchMedia?.('(max-width: 639px)').matches) {
+      try {
+        await navigator.share({
+          title: 'NIMFinder search results',
+          text: `Search "${searchQuery.trim()}" on NIMFinder`,
+          url: shareUrl,
+        });
+        return;
+      } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          return;
+        }
+      }
+    }
+
+    await copyToClipboard(shareUrl);
+    setIsShareCopied(true);
+    window.setTimeout(() => setIsShareCopied(false), 2000);
+  }, [searchQuery, university]);
 
   // Dismiss modal when clicking outside
   function handleSheetsModalBackdrop(e: React.MouseEvent<HTMLDivElement>) {
@@ -243,6 +340,8 @@ export default function App() {
                 isSimilar={isSimilar}
                 searchQuery={searchQuery}
                 university={university}
+                onShareResults={handleShareResults}
+                isShareCopied={isShareCopied}
               />
 
               {showLoadMore && (
