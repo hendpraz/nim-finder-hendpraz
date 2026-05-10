@@ -1,4 +1,5 @@
 export type University =
+  | 'all'
   | 'itb'
   | 'ui'
   | 'unpad'

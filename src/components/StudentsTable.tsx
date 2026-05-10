@@ -192,6 +192,11 @@ export function StudentsTable({
               <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Major
               </th>
+              {university === 'all' && (
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Universitas
+                </th>
+              )}
               {university === 'ui' && (
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                   Jenjang
@@ -221,6 +226,11 @@ export function StudentsTable({
                 <td className='px-6 py-4 text-sm text-gray-500'>
                   {student.major}
                 </td>
+                {university === 'all' && (
+                  <td className='px-6 py-4 text-sm text-gray-500'>
+                    {student.universitas || '-'}
+                  </td>
+                )}
                 {university === 'ui' && (
                   <td className='px-6 py-4 text-sm text-gray-500'>
                     {student.jenjang || '-'}
@@ -304,6 +314,14 @@ export function StudentsTable({
                 <span className='text-gray-400'>{student.majorId}</span>
               </div>
               <div className='text-gray-500'>{student.major}</div>
+              {university === 'all' && (
+                <div className='text-gray-500'>
+                  Universitas:{' '}
+                  <span className='font-medium'>
+                    {student.universitas || '-'}
+                  </span>
+                </div>
+              )}
               {university === 'ui' && (
                 <div className='text-gray-500'>
                   Jenjang:{' '}

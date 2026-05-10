@@ -16,6 +16,7 @@ import { UniversitySelector } from '@/components/UniversitySelector';
 import { University } from '@/types/university';
 
 const UNIVERSITY_OPTIONS: Record<University, string> = {
+  all: '✦ Semua Universitas',
   itb: 'ITB',
   ui: 'UI',
   unpad: 'UNPAD',

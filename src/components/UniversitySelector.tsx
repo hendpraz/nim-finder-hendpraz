@@ -116,7 +116,7 @@ export function UniversitySelector({
         </div>
 
         {/* Selected value overlay when not searching */}
-        {!isOpen && (
+        {/* {!isOpen && (
           <div
             onClick={() => {
               setIsOpen(true);
@@ -128,7 +128,7 @@ export function UniversitySelector({
               {selectedLabel}
             </span>
           </div>
-        )}
+        )} */}
 
         {/* Dropdown */}
         {isOpen && (

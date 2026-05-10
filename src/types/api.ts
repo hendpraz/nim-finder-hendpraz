@@ -20,3 +20,21 @@ export interface StudentPayload {
   status: string;
   jenjang?: string; // Only for UI, UNPAD
 }
+
+export interface AllApiResponse {
+  query: string;
+  total: number;
+  limit: number;
+  offset: number;
+  results: AllStudentPayload[];
+}
+
+export interface AllStudentPayload {
+  nim: string;
+  nama: string;
+  prodi: string;
+  jenjang: string;
+  status: string;
+  jenis_kelamin: string;
+  universitas: string;
+}

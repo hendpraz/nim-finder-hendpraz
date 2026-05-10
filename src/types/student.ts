@@ -6,6 +6,7 @@ export interface Student {
   jenis_kelamin: string;
   status: string;
   jenjang?: string; // Only for UI
+  universitas?: string; // Only for 'all' universities search
 }
 
 export interface PaginatedStudents {
