@@ -42,4 +42,6 @@ export type University =
   | 'universitas_pamulang'
   | 'institut_teknologi_nasional_bandung'
   | 'universitas_islam_bandung'
-  | 'universitas_atma_jaya_yogyakarta';
+  | 'universitas_atma_jaya_yogyakarta'
+  | 'universitas_muhammadiyah_prof_dr_hamka'
+  | 'universitas_muhammadiyah_yogyakarta';

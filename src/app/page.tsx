@@ -60,6 +60,8 @@ const UNIVERSITY_OPTIONS: Record<University, string> = {
   institut_teknologi_nasional_bandung: 'ITENAS Bandung',
   universitas_islam_bandung: 'UNISBA',
   universitas_atma_jaya_yogyakarta: 'UAJY',
+  universitas_muhammadiyah_prof_dr_hamka: 'UHAMKA',
+  universitas_muhammadiyah_yogyakarta: 'UMY',
 };
 
 // Add gtag type for Google Analytics
