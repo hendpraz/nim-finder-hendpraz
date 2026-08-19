@@ -5,10 +5,12 @@ import {
   Database,
   ExternalLink,
   Eye,
+  Home,
   Loader,
   Search,
   X,
 } from 'lucide-react';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 import { DiktiSearchBar } from '@/components/DiktiSearchBar';
@@ -313,21 +315,43 @@ export default function PDDIKTISearchPage() {
               </button>
             </div>
 
-            <div className='mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md'>
+            <div className='mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md'>
               <div className='flex'>
-                <AlertCircle className='h-5 w-5 text-yellow-400 mr-2 flex-shrink-0 mt-0.5' />
-                <div className='text-sm text-yellow-700'>
-                  <p className='font-medium'>Catatan Penting:</p>
+                <AlertCircle className='h-5 w-5 text-blue-500 mr-2 flex-shrink-0 mt-0.5' />
+                <div className='text-sm text-blue-700'>
+                  <p className='font-medium'>Informasi Pencarian PDDIKTI:</p>
                   <ul className='mt-1 list-disc list-inside space-y-1'>
                     <li>
-                      Fitur ini mencari langsung dari database resmi PDDIKTI
+                      Pencarian ini mengambil data langsung dari server PDDIKTI
+                      Kemdiktisaintek
                     </li>
                     <li>
-                      Beberapa pencarian mungkin terbatas oleh Server PDDIKTI
+                      Karena keterbatasan akses ke server PDDIKTI, hasil
+                      pencarian mungkin tidak selalu tersedia
+                    </li>
+                    <li>
+                      Jika pencarian gagal, silakan coba beberapa saat lagi atau
+                      gunakan alternatif di bawah
                     </li>
                   </ul>
                 </div>
               </div>
+            </div>
+
+            {/* Alternative Link */}
+            <div className='mt-4 p-4 bg-green-50 border border-green-200 rounded-md'>
+              <p className='text-sm text-green-700 mb-3'>
+                <span className='font-medium'>Rekomendasi:</span> Gunakan fitur
+                pencarian utama NIMFinder dengan data dari 40+ universitas
+                terkemuka di Indonesia!
+              </p>
+              <Link
+                href='/?uni=all'
+                className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+              >
+                <Home className='h-4 w-4 mr-2' />
+                Cari di NIMFinder (40+ Universitas)
+              </Link>
             </div>
           </div>
 
@@ -335,7 +359,24 @@ export default function PDDIKTISearchPage() {
             <div className='bg-red-50 border border-red-200 rounded-md p-4 mb-6'>
               <div className='flex'>
                 <AlertCircle className='h-5 w-5 text-red-400 mr-2 flex-shrink-0' />
-                <div className='text-sm text-red-700'>{error}</div>
+                <div className='text-sm text-red-700'>
+                  <p className='font-medium'>Pencarian Gagal</p>
+                  <p className='mt-1'>
+                    Server PDDIKTI sedang tidak dapat diakses. Hal ini bisa
+                    disebabkan oleh tingginya traffic atau pembatasan akses dari
+                    server PDDIKTI.
+                  </p>
+                  <p className='mt-2'>
+                    Gunakan{' '}
+                    <Link
+                      href='/?uni=all'
+                      className='font-medium underline hover:text-red-800'
+                    >
+                      fitur pencarian utama NIMFinder
+                    </Link>{' '}
+                    untuk data mahasiswa dari 40+ universitas.
+                  </p>
+                </div>
               </div>
             </div>
           )}
