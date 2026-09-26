@@ -4,7 +4,7 @@
   <br>
 </h1>
 
-Deployed to [https://nim-finder-hdpz.netlify.app](https://nim-finder-hdpz.netlify.app)
+Deployed to [nim-finder-hdpz.netlify.app](https://nim-finder-hdpz.netlify.app) and [nimfinder.com](https://nimfinder.com)
 
 ## Description
 
